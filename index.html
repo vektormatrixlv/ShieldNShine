@@ -1,1 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shield & Shine — Safe Car Care for Nordic Winters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1520; --bg-2:#141d2b; --panel:#182333; --line:#28394f;
+    --ice:#7fd8e0; --ice-dim:#3d6a72; --amber:#e2a545;
+    --text:#e6edf3; --text-dim:#8ea0b3; --text-faint:#5a6b7d;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:0.2px;margin:0;color:var(--text);}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  :focus-visible{outline:2px solid var(--ice);outline-offset:2px;}
+  button{font-family:'Inter',sans-serif;}
 
+  .audience-toggle{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .audience-toggle button{background:var(--bg-2);color:var(--text-dim);border:none;padding:8px 14px;font-size:12.5px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .audience-toggle button.active{background:var(--ice);color:#08181a;font-weight:600;}
+  .audience-toggle button:hover:not(.active){color:var(--text);}
+  @media (max-width:1050px){.audience-toggle{display:none;}}
+
+  /* ===== B2B PRICING TIERS ===== */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .pricing-card{border:1px solid var(--line);background:var(--bg-2);padding:28px 24px;display:flex;flex-direction:column;}
+  .pricing-card.featured{border-color:var(--ice);background:var(--panel);position:relative;}
+  .pricing-card .ptag{font-size:11px;color:var(--ice-dim);letter-spacing:0.6px;margin-bottom:14px;}
+  .pricing-card .ptag.amber{color:var(--amber);}
+  .pricing-card h3{font-size:19px;margin-bottom:12px;}
+  .pricing-card .pprice{font-family:'Oswald',sans-serif;font-size:28px;color:var(--ice);margin-bottom:18px;}
+  .pricing-card .pprice span{font-size:13px;color:var(--text-faint);font-family:'Inter',sans-serif;}
+  .pricing-card ul{list-style:none;padding:0;margin:0 0 22px;flex-grow:1;}
+  .pricing-card li{font-size:13.5px;color:var(--text-dim);padding:8px 0;border-bottom:1px solid var(--line);}
+  .pricing-card li:last-child{border-bottom:none;}
+  @media (max-width:900px){.pricing-grid{grid-template-columns:1fr;}}
+  /* ===== B2B PRICING TIERS END ===== */
+
+  /* ===== TOP BAR ===== */
+  .topbar{border-bottom:1px solid var(--line);background:var(--bg-2);position:sticky;top:0;z-index:40;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .logo{display:flex;align-items:baseline;gap:8px;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;cursor:pointer;}
+  .logo .plus{color:var(--ice);}
+  nav.mainnav{display:flex;gap:26px;font-size:14px;color:var(--text-dim);}
+  nav.mainnav a,nav.mainnav button{text-decoration:none;transition:color .15s;background:none;border:none;color:var(--text-dim);font-size:14px;cursor:pointer;padding:0;}
+  nav.mainnav a:hover,nav.mainnav button:hover{color:var(--ice);}
+  nav.mainnav .active{color:var(--ice);}
+  .navcta{border:1px solid var(--ice-dim);color:var(--ice);padding:8px 16px;font-size:13px;text-decoration:none;white-space:nowrap;background:none;cursor:pointer;}
+  .navcta:hover{background:var(--ice);color:var(--bg);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ===== HERO VIDEO BACKGROUND ===== */
+  .hero{position:relative;overflow:hidden;}
+  .hero-video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:0;
+    filter:saturate(0.75) brightness(0.55);
+  }
+  .hero-video-overlay{
+    position:absolute;inset:0;z-index:0;
+    background:
+      linear-gradient(100deg, var(--bg) 20%, rgba(14,21,32,0.75) 45%, rgba(14,21,32,0.35) 70%, rgba(14,21,32,0.55) 100%),
+      linear-gradient(180deg, rgba(14,21,32,0.2) 0%, rgba(14,21,32,0.85) 100%);
+  }
+  .hero .wrap{position:relative;z-index:1;}
+
+  /* ===== HERO ===== */
+  .hero{border-bottom:1px solid var(--line);background:radial-gradient(ellipse 700px 400px at 85% -10%, rgba(127,216,224,0.09), transparent 60%),var(--bg);padding:64px 0 56px;}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:start;}
+  .kicker-line{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text-dim);margin-bottom:20px;}
+  .kicker-line .dot{width:6px;height:6px;background:var(--ice);border-radius:50%;}
+  .hero h1{font-size:44px;line-height:1.08;max-width:11.5ch;}
+  .hero h1 .hl{color:var(--ice);}
+  .hero p.lede{margin-top:20px;font-size:16.5px;color:var(--text-dim);max-width:48ch;}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn-primary{background:var(--ice);color:#08181a;border:none;padding:13px 22px;font-size:14.5px;font-weight:600;cursor:pointer;}
+  .btn-primary:hover{background:#9ce4ea;}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:13px 22px;font-size:14.5px;cursor:pointer;text-decoration:none;display:inline-block;}
+  .btn-ghost:hover{border-color:var(--ice-dim);}
+
+  /* ===== REAL PRODUCT PHOTOS ===== */
+  .photo-thumb{height:150px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);}
+  .photo-thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(0.85) brightness(0.85);transition:transform .3s ease, filter .3s ease;display:block;}
+  .guide-card:hover .photo-thumb img{transform:scale(1.04);filter:saturate(1) brightness(0.95);}
+  .photo-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(14,21,32,0) 45%, rgba(14,21,32,0.75) 100%);}
+  .photo-thumb .thumb-label{position:absolute;left:14px;bottom:10px;z-index:1;font-family:'Oswald',sans-serif;color:var(--text);font-size:11px;letter-spacing:0.8px;}
+
+  .problem-photo{height:120px;margin:-28px -24px 18px;position:relative;overflow:hidden;}
+  .problem-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(0.85) brightness(0.8);}
+  .problem-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(14,21,32,0.1), rgba(14,21,32,0.85));}
+
+  .spot-visual{overflow:hidden;}
+  .spot-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(0.9) brightness(0.9);}
+  .spot-visual .spot-photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(14,21,32,0) 55%, rgba(14,21,32,0.7) 100%);}
+
+  .ba-panel .swatch img{width:100%;height:100%;object-fit:contain;background:var(--bg-2);}
+  .ba-panel .swatch{padding:0;overflow:hidden;}
+
+  .product-box .thumb{overflow:hidden;padding:0;}
+  .product-box .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(0.9) brightness(0.85);}
+  /* ===== REAL PRODUCT PHOTOS END ===== */
+
+  /* ===== ICONS & VISUAL BADGES ===== */
+  .icon-badge{width:52px;height:52px;border:1px solid var(--line);background:var(--bg-2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;}
+  .icon-badge svg{width:26px;height:26px;stroke:var(--ice);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .icon-badge.amber svg{stroke:var(--amber);}
+  .thumb-visual{height:150px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a2636,#0f1822);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+  .thumb-visual svg{width:44px;height:44px;stroke:var(--ice-dim);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s;position:relative;z-index:1;}
+  .guide-card:hover .thumb-visual svg{stroke:var(--ice);}
+  .thumb-visual .thumb-label{font-family:'Oswald',sans-serif;color:var(--text-faint);font-size:11px;letter-spacing:0.8px;position:relative;z-index:1;}
+  .thumb-visual::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%, rgba(127,216,224,0.08), transparent 55%);animation:driftglow 8s ease-in-out infinite;}
+  @keyframes driftglow{0%,100%{background-position:0% 0%;}50%{background-position:40% 30%;}}
+  .droplet{animation:dropfall 3s ease-in infinite;}
+  @keyframes dropfall{0%{transform:translateY(0);opacity:0;}10%{opacity:1;}70%{transform:translateY(18px);opacity:1;}85%{transform:translateY(20px);opacity:0;}100%{transform:translateY(20px);opacity:0;}}
+  .v-flash{animation:vflash .5s ease;}
+  @keyframes vflash{0%{opacity:0.15;}100%{opacity:1;}}
+
+  .panel{border:1px solid var(--line);background:var(--panel);padding:22px;position:relative;overflow:hidden;}
+  .panel::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid var(--ice);border-left:2px solid var(--ice);z-index:2;}
+  .panel::after{content:"";position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid var(--ice);border-right:2px solid var(--ice);z-index:2;}
+  .panel-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(circle at 85% 15%, rgba(127,216,224,0.10), transparent 45%),radial-gradient(circle at 10% 90%, rgba(226,165,69,0.06), transparent 40%);animation:panelbreathe 10s ease-in-out infinite;}
+  @keyframes panelbreathe{0%,100%{opacity:0.7;}50%{opacity:1;}}
+  .panel > *:not(.panel-bg){position:relative;z-index:1;}
+  /* ===== ICONS & VISUAL BADGES END ===== */
+
+  .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .panel-head .label{font-size:11.5px;letter-spacing:0.5px;color:var(--text-faint);}
+  .panel-head .id{font-size:11.5px;color:var(--ice-dim);}
+  .readout{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+  .readout div{border:1px solid var(--line);padding:12px;}
+  .readout .k{font-size:11px;color:var(--text-faint);margin-bottom:6px;}
+  .readout .v{font-size:22px;font-family:'Oswald',sans-serif;color:var(--ice);}
+  .panel p.desc{font-size:13.5px;color:var(--text-dim);margin:0 0 18px;}
+
+  /* ===== GLOSSARY VIEW ===== */
+  .gloss-head{padding:56px 0 32px;border-bottom:1px solid var(--line);}
+  .gloss-head .idx{font-size:12px;color:var(--ice-dim);font-family:'Oswald',sans-serif;margin-bottom:10px;}
+  .gloss-head h1{font-size:34px;margin-bottom:14px;}
+  .gloss-head p{font-size:15px;color:var(--text-dim);max-width:56ch;}
+  .gloss-jump{display:flex;flex-wrap:wrap;gap:6px;padding:24px 0;border-bottom:1px solid var(--line);}
+  .gloss-jump button{
+    background:none;border:1px solid var(--line);color:var(--text-dim);
+    width:30px;height:30px;font-size:12.5px;cursor:pointer;font-family:'Inter',sans-serif;
+  }
+  .gloss-jump button:hover,.gloss-jump button.has-terms{color:var(--ice);border-color:var(--ice-dim);}
+  .gloss-jump button:disabled{color:var(--text-faint);opacity:0.35;cursor:default;border-color:var(--line);}
+  .gloss-list{padding:40px 0 80px;max-width:78ch;}
+  .gloss-letter{font-family:'Oswald',sans-serif;font-size:13px;color:var(--ice-dim);letter-spacing:1px;margin:36px 0 4px;}
+  .gloss-letter:first-child{margin-top:0;}
+  .gloss-term{border-bottom:1px solid var(--line);padding:20px 0;}
+  .gloss-term dt{font-size:17px;color:var(--text);font-weight:600;margin-bottom:8px;}
+  .gloss-term dd{margin:0;font-size:14.5px;color:var(--text-dim);line-height:1.6;}
+  .gloss-term .see-also{font-size:12.5px;color:var(--ice);margin-top:10px;display:inline-block;cursor:pointer;text-decoration:none;}
+
+  /* ===== CONDITIONS STRIP ===== */
+  .conditions-strip{
+    background:var(--bg-2);
+    border-bottom:1px solid var(--line);
+  }
+  .conditions-strip .wrap{
+    display:flex;align-items:center;gap:16px;
+    height:44px;font-size:12.5px;color:var(--text-dim);
+    overflow:hidden;
+  }
+  .conditions-strip .cs-dot{width:6px;height:6px;border-radius:50%;background:var(--ice);flex-shrink:0;animation:cs-pulse 2s ease-in-out infinite;}
+  @keyframes cs-pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .conditions-strip .cs-label{color:var(--text-faint);flex-shrink:0;}
+  .conditions-strip .cs-text{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .conditions-strip .cs-updated{margin-left:auto;color:var(--text-faint);flex-shrink:0;font-size:11.5px;}
+  @media (max-width:700px){
+    .conditions-strip .cs-updated{display:none;}
+  }
+
+  /* ===== REGION TOGGLE ===== */
+  .region-toggle{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:18px;}
+  .region-toggle button{
+    flex:1;background:var(--bg-2);color:var(--text-dim);border:none;
+    padding:9px 10px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;
+  }
+  .region-toggle button.active{background:var(--ice);color:#08181a;font-weight:600;}
+  .region-toggle button:hover:not(.active){color:var(--text);}
+
+  /* ===== GUIDE SILO TABS ===== */
+  .silo-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+  .silo-tab{
+    background:none;border:1px solid var(--line);color:var(--text-dim);
+    padding:9px 16px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;
+  }
+  .silo-tab.active{border-color:var(--ice);color:var(--ice);}
+  .silo-tab:hover:not(.active){border-color:var(--ice-dim);}
+  .guide-card.silo-hidden{display:none;}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line);}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap;}
+  .sec-head .idx{font-size:12px;color:var(--ice-dim);font-family:'Oswald',sans-serif;margin-bottom:8px;}
+  .sec-head h2{font-size:28px;}
+  .sec-head .sub{color:var(--text-dim);font-size:14.5px;max-width:46ch;margin-top:8px;}
+
+  /* ===== PROBLEM GRID ===== */
+  .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .problem-card{background:var(--bg-2);padding:28px 24px;transition:background .15s;text-decoration:none;color:var(--text);display:block;cursor:pointer;}
+  .problem-card:hover{background:var(--panel);}
+  .problem-card .tag{font-size:11px;color:var(--text-faint);margin-bottom:14px;}
+  .problem-card h3{font-size:19px;margin-bottom:10px;}
+  .problem-card p{font-size:13.5px;color:var(--text-dim);margin:0 0 16px;}
+  .problem-card .go{font-size:12.5px;color:var(--ice);}
+
+  /* ===== QUIZ ===== */
+  .quiz-shell{border:1px solid var(--line);background:var(--panel);padding:0;display:grid;grid-template-columns:1fr 1.4fr;}
+  .quiz-side{padding:36px 32px;border-right:1px solid var(--line);background:linear-gradient(160deg, rgba(127,216,224,0.06), transparent 60%);}
+  .quiz-side h3{font-size:22px;margin-bottom:14px;}
+  .quiz-side p{font-size:13.5px;color:var(--text-dim);}
+  .quiz-progress{display:flex;gap:6px;margin-top:26px;}
+  .quiz-progress span{height:3px;flex:1;background:var(--line);}
+  .quiz-progress span.done{background:var(--ice);}
+  .quiz-main{padding:36px 32px;}
+  .q-step{display:none;}
+  .q-step.active{display:block;}
+  .q-step .qn{font-size:11.5px;color:var(--text-faint);margin-bottom:10px;}
+  .q-step h4{font-size:18px;margin-bottom:20px;font-weight:500;font-family:'Inter',sans-serif;}
+  .opt-list{display:flex;flex-direction:column;gap:10px;}
+  .opt{border:1px solid var(--line);padding:14px 16px;cursor:pointer;font-size:14px;background:var(--bg-2);transition:border-color .15s;}
+  .opt:hover{border-color:var(--ice-dim);}
+  .opt.selected{border-color:var(--ice);color:var(--ice);}
+  .q-result{display:none;}
+  .q-result.active{display:block;}
+  .q-result .lead{font-size:12px;color:var(--text-faint);margin-bottom:10px;}
+  .q-result h4{font-size:20px;margin-bottom:18px;}
+  .kit-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:22px;}
+  .kit-item{background:var(--bg-2);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;}
+  .kit-item .name{color:var(--text);}
+  .kit-item .why{color:var(--text-faint);font-size:12px;}
+  .restart{background:none;border:none;color:var(--text-dim);font-size:12.5px;cursor:pointer;text-decoration:underline;padding:0;}
+
+  /* ===== WASH LOG TRACKER ===== */
+  .log-shell{border:1px solid var(--line);background:var(--panel);display:grid;grid-template-columns:1fr 1.3fr;}
+  .log-side{padding:36px 32px;border-right:1px solid var(--line);background:linear-gradient(160deg, rgba(226,165,69,0.06), transparent 60%);}
+  .log-side h3{font-size:22px;margin-bottom:14px;}
+  .log-side p{font-size:13.5px;color:var(--text-dim);margin-bottom:24px;}
+  .log-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .log-stats div{border:1px solid var(--line);padding:14px;}
+  .log-stats .k{font-size:11px;color:var(--text-faint);margin-bottom:6px;}
+  .log-stats .v{font-size:20px;font-family:'Oswald',sans-serif;color:var(--amber);}
+  .log-main{padding:36px 32px;}
+  .log-form{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+  .log-form select,.log-form input{
+    background:var(--bg-2);border:1px solid var(--line);color:var(--text);
+    padding:10px 12px;font-size:13.5px;font-family:'Inter',sans-serif;
+  }
+  .log-form button{background:var(--amber);color:#241705;border:none;padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;}
+  .log-form button:hover{background:#eeb862;}
+  .log-empty{font-size:13.5px;color:var(--text-faint);border:1px dashed var(--line);padding:24px;text-align:center;}
+  .log-entries{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .log-entry{background:var(--bg-2);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;}
+  .log-entry .meta{color:var(--text-faint);font-size:12px;}
+  .log-entry .del{background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:16px;}
+  .log-entry .del:hover{color:var(--amber);}
+  .log-note{font-size:12px;color:var(--text-faint);margin-top:16px;}
+
+  /* ===== GUIDES / BLOG ===== */
+  .guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .guide-card{border:1px solid var(--line);cursor:pointer;}
+  .guide-thumb{height:150px;background:linear-gradient(135deg,#1a2636,#0f1822);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);font-family:'Oswald',sans-serif;color:var(--ice-dim);font-size:13px;letter-spacing:0.5px;}
+  .guide-body{padding:20px;}
+  .guide-body .cat{font-size:11px;color:var(--amber);margin-bottom:10px;}
+  .guide-body h3{font-size:16.5px;line-height:1.3;margin-bottom:10px;}
+  .guide-body p{font-size:13px;color:var(--text-dim);margin:0 0 14px;}
+  .guide-body .read{font-size:12.5px;color:var(--ice);text-decoration:none;}
+
+  /* ===== PRODUCT SPOTLIGHT ===== */
+  .spotlight{display:grid;grid-template-columns:0.8fr 1.2fr;gap:48px;align-items:center;}
+  .spot-visual{aspect-ratio:4/5;border:1px solid var(--line);background:linear-gradient(160deg,#1c2c3a,#0d1520);display:flex;align-items:center;justify-content:center;position:relative;}
+  .spot-visual .cap{position:absolute;bottom:16px;left:16px;font-size:11px;color:var(--text-faint);}
+  .spot-visual .mark{font-family:'Oswald',sans-serif;font-size:15px;color:var(--ice-dim);letter-spacing:1px;}
+  .spot-badge{display:inline-block;font-size:11px;color:var(--amber);border:1px solid var(--amber);padding:4px 10px;margin-bottom:16px;}
+  .spot-copy h3{font-size:26px;margin-bottom:14px;}
+  .spot-copy p{font-size:14.5px;color:var(--text-dim);max-width:52ch;margin-bottom:20px;}
+  .spot-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:26px;}
+  .spot-facts div{background:var(--bg-2);padding:14px;}
+  .spot-facts .k{font-size:11px;color:var(--text-faint);margin-bottom:6px;}
+  .spot-facts .v{font-size:14.5px;color:var(--text);}
+  .code-row{display:flex;align-items:center;gap:12px;border:1px dashed var(--ice-dim);padding:14px 16px;max-width:420px;font-size:13.5px;flex-wrap:wrap;}
+  .code-row code{color:var(--ice);font-family:'Oswald',sans-serif;letter-spacing:1px;}
+
+  footer{padding:40px 0 100px;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;}
+  footer .fine{font-size:12px;color:var(--text-faint);max-width:60ch;line-height:1.6;}
+  footer .fcols{display:flex;gap:56px;}
+  footer .fcol h4{font-size:12px;color:var(--text-faint);margin-bottom:12px;font-weight:500;}
+  footer .fcol a{display:block;font-size:13px;color:var(--text-dim);text-decoration:none;margin-bottom:8px;cursor:pointer;}
+  footer .fcol a:hover{color:var(--ice);}
+
+  /* ===== STICKY DISCOUNT BAR ===== */
+  .sticky-bar{position:fixed;left:0;right:0;bottom:0;background:var(--amber);color:#241705;z-index:50;transform:translateY(0);transition:transform .25s ease;}
+  .sticky-bar.hidden{transform:translateY(100%);}
+  .sticky-bar .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;font-size:13.5px;}
+  .sticky-bar strong{font-family:'Oswald',sans-serif;letter-spacing:0.5px;}
+  .sticky-bar .close{background:none;border:none;font-size:18px;color:#241705;cursor:pointer;line-height:1;}
+  .sticky-bar .claim{background:#241705;color:var(--amber);border:none;padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;}
+
+  /* ===== reading progress (article view) ===== */
+  .read-progress{position:fixed;top:0;left:0;height:2px;background:var(--ice);z-index:60;width:0%;}
+
+  /* ===== ARTICLE VIEW ===== */
+  .crumb{padding:20px 0 0;font-size:12.5px;color:var(--text-faint);}
+  .crumb a{color:var(--text-dim);text-decoration:none;cursor:pointer;}
+  .crumb a:hover{color:var(--ice);}
+  .art-head{padding:20px 0 40px;border-bottom:1px solid var(--line);}
+  .art-head .cat{font-size:11.5px;color:var(--amber);margin-bottom:16px;}
+  .art-head h1{font-size:38px;line-height:1.15;max-width:22ch;margin-bottom:18px;}
+  .art-meta{display:flex;gap:18px;font-size:12.5px;color:var(--text-faint);flex-wrap:wrap;}
+  .art-meta span{border-right:1px solid var(--line);padding-right:18px;}
+  .art-meta span:last-child{border-right:none;}
+  .art-body-wrap{padding:48px 0 64px;}
+  .art-grid{display:grid;grid-template-columns:1fr 300px;gap:64px;align-items:start;}
+  article{max-width:70ch;font-size:16px;color:var(--text-dim);}
+  article p{margin:0 0 22px;}
+  article h2{font-size:23px;color:var(--text);margin:44px 0 18px;}
+  article h3{font-size:18px;color:var(--text);margin:32px 0 14px;font-weight:500;}
+  article ul{padding-left:20px;margin:0 0 22px;}
+  article li{margin-bottom:8px;}
+  article strong{color:var(--text);font-weight:600;}
+  .aff-link{color:var(--ice);text-decoration:underline;text-decoration-color:var(--ice-dim);text-underline-offset:3px;}
+  .aff-link:hover{text-decoration-color:var(--ice);}
+  .product-box{display:grid;grid-template-columns:120px 1fr;gap:20px;border:1px solid var(--ice-dim);background:var(--panel);padding:20px;margin:32px 0;align-items:center;}
+  .product-box .thumb{aspect-ratio:1/1;background:linear-gradient(160deg,#1c2c3a,#0d1520);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:10.5px;color:var(--ice-dim);text-align:center;padding:8px;}
+  .product-box .info .eyebrow{font-size:11px;color:var(--amber);margin-bottom:6px;}
+  .product-box .info h4{font-size:16px;font-family:'Inter',sans-serif;font-weight:600;color:var(--text);margin:0 0 8px;}
+  .product-box .info p{font-size:13.5px;color:var(--text-dim);margin:0 0 14px;}
+  .product-box .facts{display:flex;gap:14px;font-size:12px;color:var(--text-faint);margin-bottom:14px;flex-wrap:wrap;}
+  .product-box .facts b{color:var(--ice);font-weight:500;}
+  .box-cta{display:inline-block;background:var(--ice);color:#08181a;font-size:12.5px;font-weight:600;padding:9px 16px;text-decoration:none;}
+  .box-cta:hover{background:#9ce4ea;}
+  .callout{border-left:2px solid var(--ice);padding:4px 0 4px 20px;margin:32px 0;font-size:15.5px;color:var(--text);}
+  .ba-strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0;}
+  .ba-panel{background:var(--bg-2);padding:22px;text-align:center;}
+  .ba-panel .swatch{height:150px;border:1px solid var(--line);margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:11px;color:var(--text-faint);}
+  .ba-panel.before .swatch{background:repeating-linear-gradient(45deg,#241b12,#241b12 6px,#1b140d 6px,#1b140d 12px);}
+  .ba-panel.after .swatch{background:linear-gradient(160deg,#16323a,#0d1a1d);color:var(--ice-dim);}
+  .ba-panel .lbl{font-size:11.5px;color:var(--text-faint);letter-spacing:0.5px;}
+  .sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:24px;}
+  .side-card{border:1px solid var(--line);background:var(--panel);padding:20px;}
+  .side-card h4{font-size:13px;color:var(--text-faint);margin-bottom:14px;}
+  .side-card .kit-item{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .side-card .kit-item:last-child{border-bottom:none;}
+  .side-card .kit-item a{color:var(--ice);text-decoration:none;font-size:12.5px;}
+  .side-code{border:1px dashed var(--ice-dim);padding:14px 16px;font-size:13px;}
+  .side-code code{color:var(--ice);font-family:'Oswald',sans-serif;letter-spacing:1px;display:block;margin:8px 0;font-size:16px;}
+  .disclosure{font-size:11.5px;color:var(--text-faint);line-height:1.6;}
+  .related{padding:56px 0 80px;}
+  .related h2{font-size:22px;margin-bottom:28px;}
+  .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .rel-card{border:1px solid var(--line);padding:18px;text-decoration:none;color:var(--text);display:block;cursor:pointer;}
+  .rel-card:hover{border-color:var(--ice-dim);}
+  .rel-card .cat{font-size:10.5px;color:var(--amber);margin-bottom:10px;}
+  .rel-card h3{font-size:15px;line-height:1.35;font-weight:500;font-family:'Inter',sans-serif;}
+
+  /* ===== DILUTION CALCULATOR VIEW ===== */
+  .calc-head{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+  .calc-head .idx{font-size:12px;color:var(--ice-dim);font-family:'Oswald',sans-serif;margin-bottom:10px;}
+  .calc-head h1{font-size:34px;line-height:1.15;max-width:24ch;margin-bottom:14px;}
+  .calc-head p{font-size:15px;color:var(--text-dim);max-width:56ch;}
+  .calc-wrap{padding:48px 0 80px;}
+  .calc-shell{border:1px solid var(--line);background:var(--panel);display:grid;grid-template-columns:1fr 1fr;}
+  .calc-side{padding:36px 32px;border-right:1px solid var(--line);}
+  .calc-side h3{font-size:19px;margin-bottom:16px;}
+  .calc-field{margin-bottom:20px;}
+  .calc-field label{display:block;font-size:12px;color:var(--text-faint);margin-bottom:8px;}
+  .calc-field select,.calc-field input{
+    width:100%;background:var(--bg-2);border:1px solid var(--line);color:var(--text);
+    padding:11px 12px;font-size:14px;font-family:'Inter',sans-serif;
+  }
+  .calc-field select:focus,.calc-field input:focus{border-color:var(--ice-dim);}
+  .ratio-row{display:flex;align-items:center;gap:8px;}
+  .ratio-row input{width:70px;text-align:center;}
+  .ratio-row span{color:var(--text-faint);font-size:14px;}
+  .calc-side .hint{font-size:12px;color:var(--text-faint);margin-top:-10px;margin-bottom:20px;}
+  .calc-result{padding:36px 32px;display:flex;flex-direction:column;justify-content:center;}
+  .calc-result .lead{font-size:11.5px;color:var(--text-faint);margin-bottom:14px;}
+  .result-big{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:20px;}
+  .result-big div{background:var(--bg-2);padding:18px;}
+  .result-big .k{font-size:11.5px;color:var(--text-faint);margin-bottom:8px;}
+  .result-big .v{font-size:26px;font-family:'Oswald',sans-serif;color:var(--ice);}
+  .result-big .v small{font-size:14px;color:var(--text-dim);}
+  .result-note{font-size:13px;color:var(--text-dim);border-left:2px solid var(--ice);padding-left:16px;}
+  .calc-presets{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin:56px 0 0;}
+  .preset-row{background:var(--bg-2);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;flex-wrap:wrap;gap:6px;}
+  .preset-row .pname{color:var(--text);}
+  .preset-row .pratio{color:var(--ice);font-family:'Oswald',sans-serif;font-size:13px;}
+  .preset-row .puse{color:var(--text-faint);font-size:12px;}
+
+  @media (max-width:900px){
+    .calc-shell{grid-template-columns:1fr;}
+    .calc-side{border-right:none;border-bottom:1px solid var(--line);}
+    .result-big{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:900px){
+    nav.mainnav{display:none;}
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero h1{font-size:34px;max-width:none;}
+    .problem-grid{grid-template-columns:1fr;}
+    .quiz-shell,.log-shell{grid-template-columns:1fr;}
+    .quiz-side,.log-side{border-right:none;border-bottom:1px solid var(--line);}
+    .guide-grid{grid-template-columns:1fr;}
+    .spotlight{grid-template-columns:1fr;}
+    .spot-facts{grid-template-columns:1fr;}
+    footer .wrap{flex-direction:column;}
+    .art-grid{grid-template-columns:1fr;}
+    .sidebar{position:static;}
+    .product-box{grid-template-columns:1fr;}
+    .related-grid{grid-template-columns:1fr;}
+    .ba-strip{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="read-progress" id="readProgress"></div>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo" onclick="showView('b2b')">Shield<span class="plus">&</span>Shine</div>
+    <div class="audience-toggle">
+      <button class="active" data-aud="b2b" onclick="showView('b2b')">For Business</button>
+      <button data-aud="b2c" onclick="showView('home')">For Drivers</button>
+    </div>
+    <nav class="mainnav" id="b2bNav">
+      <a onclick="showView('b2b');scrollToId('b2b-pain')">Why Switch</a>
+      <a onclick="showView('b2b');scrollToId('b2b-pricing')">Pricing</a>
+      <a onclick="showView('b2b');scrollToId('b2b-costcalc')">Cost Calculator</a>
+      <a onclick="showView('b2b');scrollToId('b2b-cases')">Case Studies</a>
+    </nav>
+    <nav class="mainnav" id="b2cNav" style="display:none;">
+      <a onclick="showView('home');scrollToId('problems')">Problems</a>
+      <a onclick="showView('home');scrollToId('quiz')">Routine Builder</a>
+      <a onclick="showView('home');scrollToId('washlog')">Wash Log</a>
+      <a onclick="showView('calculator')">Dilution Calc</a>
+      <a onclick="showView('glossary')">Glossary</a>
+      <a onclick="showView('home');scrollToId('guides')">Guides</a>
+    </nav>
+    <button class="navcta" id="mainNavCta" onclick="showView('b2b');scrollToId('b2b-contact')">Request trade pricing</button>
+  </div>
+</div>
+
+<div class="conditions-strip">
+  <div class="wrap">
+    <span class="cs-dot"></span>
+    <span class="cs-label" id="csLabel">CURRENT CONDITIONS · NORDIC</span>
+    <span class="cs-text" id="csText">Loading today's reading…</span>
+    <span class="cs-updated" id="csUpdated"></span>
+  </div>
+</div>
+
+<!-- ============ B2B VIEW (PRIMARY) ============ -->
+<div class="view active" id="view-b2b">
+
+  <header class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://assets.mixkit.co/videos/49200/49200-thumb-360-2.jpg">
+      <source src="https://assets.mixkit.co/videos/49200/49200-360.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <div class="wrap">
+      <div>
+        <div class="kicker-line"><span class="dot"></span> Trade pricing for detailing studios & car washes</div>
+        <h1>Cut product cost per wash, not the quality your customers notice</h1>
+        <p class="lede">Bulk-concentrate pH-safe chemistry for studios and car washes across the Nordics, Ireland and the Netherlands — priced for volume, consistent across every bay and every shift.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="scrollToId('b2b-pricing')">See trade pricing</button>
+          <button class="btn-ghost" onclick="scrollToId('b2b-costcalc')">Calculate my cost per wash</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-bg"></div>
+        <div class="panel-head">
+          <span class="label">WHOLESALE SNAPSHOT — DEMO</span>
+          <span class="id">SEGMENT: B2B</span>
+        </div>
+        <div class="readout">
+          <div><div class="k">Typical bulk order value</div><div class="v">€300–1,000</div></div>
+          <div><div class="k">Wholesale margin vs retail</div><div class="v">Lower cost/L</div></div>
+          <div><div class="k">Concentrate dilution range</div><div class="v">1:5 – 1:200</div></div>
+          <div><div class="k">Reorder cadence</div><div class="v">Monthly</div></div>
+        </div>
+        <p class="desc">Illustrative figures for this demo portal — a real trade-pricing panel would reflect your actual bulk tiers and delivery lead times.</p>
+        <button class="btn-ghost" onclick="scrollToId('b2b-contact')">Talk to us</button>
+      </div>
+    </div>
+  </header>
+
+  <section id="b2b-pain">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">WHY STUDIOS SWITCH</div>
+          <h2>The three costs a retail-priced chemical line quietly adds</h2>
+          <p class="sub">These aren't hypothetical — they're the reasons detailing studios and car washes move to a trade account.</p>
+        </div>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card" onclick="scrollToId('b2b-costcalc')">
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5.5c0-1.9-2-3-5-3s-5 1.4-5 3 2 2.6 5 3 5 1.4 5 3-2 3-5 3-5-1.1-5-3"/></svg>
+          </div>
+          <div class="tag">PRODUCT WASTE</div>
+          <h3>Over-diluting or under-diluting by eye</h3>
+          <p>Retail-sized bottles and no fixed ratio guidance means every staff member mixes slightly differently — wasting concentrate or under-cleaning.</p>
+          <div class="go">Calculate your cost per wash →</div>
+        </div>
+        <div class="problem-card" onclick="scrollToId('b2b-pricing')">
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+          </div>
+          <div class="tag">INCONSISTENT RESULTS</div>
+          <h3>Every bay gets a different result</h3>
+          <p>Without a fixed product and ratio per task, results vary by which staff member is on shift — a problem retail bottles were never designed to solve.</p>
+          <div class="go">See trade kits →</div>
+        </div>
+        <div class="problem-card" onclick="scrollToId('b2b-contact')">
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24"><path d="M4 4v16M4 4h13l-2 4 2 4H4"/></svg>
+          </div>
+          <div class="tag">UNPREDICTABLE REORDERS</div>
+          <h3>Running out mid-week, or over-ordering</h3>
+          <p>Retail purchasing has no reorder cadence built in. A trade account gives you a delivery schedule matched to your actual wash volume.</p>
+          <div class="go">Talk to us about supply →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="b2b-pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">TRADE PRICING</div>
+          <h2>Volume tiers, not single-bottle pricing</h2>
+          <p class="sub">Illustrative tiers for this demo — real pricing would be agreed directly per account and delivery region.</p>
+        </div>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="ptag">STARTER</div>
+          <h3>Independent detailer</h3>
+          <div class="pprice">From €180<span>/month</span></div>
+          <ul>
+            <li>Up to 40 washes/month</li>
+            <li>5L concentrate bottles</li>
+            <li>Standard delivery</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn-ghost" onclick="scrollToId('b2b-contact')">Request pricing</button>
+        </div>
+        <div class="pricing-card featured">
+          <div class="ptag amber">MOST COMMON</div>
+          <h3>Detailing studio</h3>
+          <div class="pprice">From €420<span>/month</span></div>
+          <ul>
+            <li>Up to 200 washes/month</li>
+            <li>20L drums, better cost/L</li>
+            <li>Priority delivery</li>
+            <li>Dedicated account contact</li>
+            <li>Staff dilution training</li>
+          </ul>
+          <button class="btn-primary" onclick="scrollToId('b2b-contact')">Request pricing</button>
+        </div>
+        <div class="pricing-card">
+          <div class="ptag">FLEET</div>
+          <h3>Car wash / multi-bay site</h3>
+          <div class="pprice">Custom</div>
+          <ul>
+            <li>200+ washes/month</li>
+            <li>Bulk drums, scheduled refills</li>
+            <li>Multi-site delivery</li>
+            <li>Volume-based contract pricing</li>
+          </ul>
+          <button class="btn-ghost" onclick="scrollToId('b2b-contact')">Talk to sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="b2b-costcalc">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">COST TOOL</div>
+          <h2>Cost-per-wash calculator</h2>
+          <p class="sub">Work out your actual product cost per vehicle at wholesale pricing, using your dilution ratio and bulk price.</p>
+        </div>
+      </div>
+      <div class="calc-shell">
+        <div class="calc-side">
+          <h3>Enter your numbers</h3>
+          <div class="calc-field">
+            <label>Bulk container price (€)</label>
+            <input type="number" id="b2bPrice" value="180" min="0" oninput="calcCostPerWash()">
+          </div>
+          <div class="calc-field">
+            <label>Bulk container size</label>
+            <div class="ratio-row">
+              <input type="number" id="b2bSize" value="20" min="1" oninput="calcCostPerWash()" style="width:100%;">
+              <select id="b2bSizeUnit" onchange="calcCostPerWash()" style="width:100px;">
+                <option value="l">litres</option>
+                <option value="ml">ml</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label>Dilution ratio (concentrate : water)</label>
+            <div class="ratio-row">
+              <input type="number" id="b2bRatioConc" value="1" min="1" oninput="calcCostPerWash()">
+              <span>:</span>
+              <input type="number" id="b2bRatioWater" value="10" min="1" oninput="calcCostPerWash()">
+            </div>
+          </div>
+          <div class="calc-field">
+            <label>Concentrate used per wash (ml, before dilution)</label>
+            <input type="number" id="b2bMlPerWash" value="15" min="1" oninput="calcCostPerWash()">
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="lead">YOUR ECONOMICS</div>
+          <div class="result-big">
+            <div><div class="k">Cost per wash</div><div class="v" id="b2bCostOut">—</div></div>
+            <div><div class="k">Washes per container</div><div class="v" id="b2bWashesOut">—</div></div>
+          </div>
+          <p class="result-note" id="b2bNote">Enter your numbers to see the cost per wash.</p>
+        </div>
+      </div>
+      <p class="log-note" style="margin-top:20px;">Demo only — figures are illustrative and not a quote. A real deployment would pull your actual trade price per tier automatically.</p>
+    </div>
+  </section>
+
+  <section id="b2b-cases">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">CASE STUDIES</div>
+          <h2>What switching actually looks like</h2>
+          <p class="sub">Placeholder case studies for this demo — real ones would carry a studio name, location, and verified before/after cost figures.</p>
+        </div>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg><span class="thumb-label">DETAILING STUDIO — JELGAVA</span></div>
+          <div class="guide-body">
+            <div class="cat">CASE STUDY</div>
+            <h3>Cutting product cost per wash by switching to bulk concentrate</h3>
+            <p>How a single-bay studio replaced five retail bottles with two bulk drums and a fixed dilution chart.</p>
+            <span class="read">Read the case study →</span>
+          </div>
+        </div>
+        <div class="guide-card">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M5 17h-2v-4l3-5h7l3 5h1v4h-2M9 8V5h5"/></svg><span class="thumb-label">CAR WASH — MULTI-BAY</span></div>
+          <div class="guide-body">
+            <div class="cat">CASE STUDY</div>
+            <h3>Standardising results across four bays and three shifts</h3>
+            <p>A dilution chart and staff training cut result variance between shifts, without changing the wash process itself.</p>
+            <span class="read">Read the case study →</span>
+          </div>
+        </div>
+        <div class="guide-card">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2"/></svg><span class="thumb-label">MOBILE DETAILER — FLEET</span></div>
+          <div class="guide-body">
+            <div class="cat">CASE STUDY</div>
+            <h3>Matching delivery cadence to actual weekly volume</h3>
+            <p>Moving from ad-hoc retail purchases to a scheduled monthly refill removed both stockouts and over-ordering.</p>
+            <span class="read">Read the case study →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="b2b-contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">GET STARTED</div>
+          <h2>Request trade pricing</h2>
+          <p class="sub">Demo form only — nothing is submitted. A real version would route to a sales contact or CRM.</p>
+        </div>
+      </div>
+      <div class="quiz-shell">
+        <div class="quiz-side">
+          <h3>Tell us about your business</h3>
+          <p>A few quick details help us recommend the right tier and delivery schedule before we talk pricing directly.</p>
+        </div>
+        <div class="quiz-main">
+          <div class="calc-field">
+            <label>Business type</label>
+            <select id="b2bType">
+              <option>Independent detailer</option>
+              <option>Detailing studio</option>
+              <option>Car wash / multi-bay site</option>
+              <option>Mobile detailing</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Approx. washes per month</label>
+            <input type="number" placeholder="e.g. 120">
+          </div>
+          <div class="calc-field">
+            <label>Contact email</label>
+            <input type="email" placeholder="you@studio.com">
+          </div>
+          <button class="btn-primary" onclick="alert('Demo only — this would submit to a trade sales contact.')">Request pricing</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="fine">This is a design demo for a proposed independent affiliate portal. Trade pricing, case studies and figures shown are illustrative and not verified claims. No orders can be placed on this page.</p>
+      <div class="fcols">
+        <div class="fcol">
+          <h4>FOR BUSINESS</h4>
+          <a onclick="scrollToId('b2b-pricing')">Pricing</a>
+          <a onclick="scrollToId('b2b-costcalc')">Cost Calculator</a>
+          <a onclick="scrollToId('b2b-cases')">Case Studies</a>
+        </div>
+        <div class="fcol">
+          <h4>FOR DRIVERS</h4>
+          <a onclick="showView('home')">Consumer site →</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ HOME VIEW (B2C) ============ -->
+<div class="view" id="view-home">
+
+
+  <header class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://assets.mixkit.co/videos/47588/47588-thumb-360-2.jpg">
+      <source src="https://assets.mixkit.co/videos/47588/47588-360.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <div class="wrap">
+      <div>
+        <div class="kicker-line"><span class="dot"></span> Independent guide · not affiliated with a single retailer</div>
+        <h1 id="heroHeadline">Protect your car from <span class="hl">road salt, rain and grime</span>, without guessing at the chemistry</h1>
+        <p class="lede" id="heroLede">A field guide to pH-safe car care for Sweden, Denmark, Ireland and the Netherlands — built for people who'd rather read one clear answer than fifty conflicting forum threads.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="scrollToId('quiz')">Find my wash routine</button>
+          <button class="btn-ghost" onclick="scrollToId('guides')">Read the guides</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-bg"></div>
+        <div class="panel-head">
+          <span class="label" id="readoutLabel">EXPOSURE READOUT — DEMO</span>
+          <span class="id" id="readoutRegionTag">REGION: NORDIC</span>
+        </div>
+        <div class="region-toggle">
+          <button class="active" data-region="nordic" onclick="setRegion('nordic')">Nordic</button>
+          <button data-region="ireland" onclick="setRegion('ireland')">Ireland</button>
+          <button data-region="netherlands" onclick="setRegion('netherlands')">Netherlands</button>
+        </div>
+        <div class="readout" id="readoutStats">
+          <div><div class="k">Avg. winter road salt use</div><div class="v">High</div></div>
+          <div><div class="k">Iron contamination risk</div><div class="v">Elevated</div></div>
+          <div><div class="k">Safe wash interval</div><div class="v">7–10 days</div></div>
+          <div><div class="k">Coating at risk</div><div class="v">Wax / Ceramic</div></div>
+        </div>
+        <p class="desc" id="readoutDesc">Illustrative figures for this demo portal — in production this panel would pull live regional salt-use data to justify wash frequency recommendations.</p>
+        <button class="btn-ghost" onclick="scrollToId('quiz')">Get my numbers</button>
+      </div>
+    </div>
+  </header>
+
+  <section id="problems">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">START HERE</div>
+          <h2>What's actually attacking your car right now</h2>
+          <p class="sub">Pick the problem you're seeing. Each one links to a step-by-step guide with the specific product it calls for.</p>
+        </div>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card" onclick="showView('article')">
+          <div class="problem-photo"><img src="https://murovtech.lv/cdn/shop/files/DSC02778.jpg?v=1783786002&width=500" alt="MUROVTECH Car Shampoo" loading="lazy"></div>
+          <div class="tag">PAINT PROTECTION</div>
+          <h3>Salt film and swirl marks on the body</h3>
+          <p>How to strip winter grime without stripping your wax or ceramic coating underneath it.</p>
+          <div class="go">Read the guide →</div>
+        </div>
+        <div class="problem-card" onclick="showView('home');scrollToId('guides')">
+          <div class="problem-photo"><img src="https://murovtech.lv/cdn/shop/files/DSC02774.jpg?v=1783786003&width=500" alt="MUROVTECH Leather Cleaner" loading="lazy"></div>
+          <div class="tag">INTERIOR RECOVERY</div>
+          <h3>Salt stains and damp odour in the cabin</h3>
+          <p>Getting winter footwell stains out of carpet and leather without soaking the foam underneath.</p>
+          <div class="go">Read the guide →</div>
+        </div>
+        <div class="problem-card" onclick="showView('home');scrollToId('guides')">
+          <div class="icon-badge">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2M7.5 7.5l1.4 1.4M15.1 15.1l1.4 1.4M16.5 7.5l-1.4 1.4M8.9 15.1l-1.4 1.4"/></svg>
+          </div>
+          <div class="tag">WHEEL & IRON CARE</div>
+          <h3>Rust-coloured dust baked onto the alloys</h3>
+          <p>Why brake dust and road-salt iron particles need a different cleaner than your body shampoo.</p>
+          <div class="go">Read the guide →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">ROUTINE BUILDER</div>
+          <h2>Answer three questions, get a wash routine</h2>
+          <p class="sub">No email required for this demo. In production this feeds a personalised product list with affiliate links.</p>
+        </div>
+      </div>
+      <div class="quiz-shell">
+        <div class="quiz-side">
+          <h3>The Routine Builder</h3>
+          <p>Three quick questions match your car's exposure and coating type to a minimal, safe wash kit — instead of you buying six bottles and guessing which ones fight each other.</p>
+          <div class="quiz-progress" id="progress">
+            <span data-i="0"></span><span data-i="1"></span><span data-i="2"></span>
+          </div>
+        </div>
+        <div class="quiz-main">
+          <div class="q-step active" data-step="0">
+            <div class="qn">QUESTION 1 OF 3</div>
+            <h4>Where do you usually wash the car?</h4>
+            <div class="opt-list">
+              <div class="opt" data-q="0" data-v="home">At home, by hand</div>
+              <div class="opt" data-q="0" data-v="selfservice">Self-service bay</div>
+              <div class="opt" data-q="0" data-v="tunnel">Automatic wash tunnel</div>
+            </div>
+          </div>
+          <div class="q-step" data-step="1">
+            <div class="qn">QUESTION 2 OF 3</div>
+            <h4>Does the car have a protective coating?</h4>
+            <div class="opt-list">
+              <div class="opt" data-q="1" data-v="ceramic">Yes — ceramic coating</div>
+              <div class="opt" data-q="1" data-v="wax">Yes — wax or sealant</div>
+              <div class="opt" data-q="1" data-v="none">No coating / not sure</div>
+            </div>
+          </div>
+          <div class="q-step" data-step="2">
+            <div class="qn">QUESTION 3 OF 3</div>
+            <h4>What's bothering you most right now?</h4>
+            <div class="opt-list">
+              <div class="opt" data-q="2" data-v="wheels">Rust-coloured dust on the wheels</div>
+              <div class="opt" data-q="2" data-v="interior">Stains or smell inside the cabin</div>
+              <div class="opt" data-q="2" data-v="bugs">Bug and tar residue on the front end</div>
+            </div>
+          </div>
+          <div class="q-result" data-step="result">
+            <div class="lead">YOUR STARTING KIT</div>
+            <h4 id="resultHeadline">Kit recommendation</h4>
+            <div class="kit-list" id="kitList"></div>
+            <button class="restart" onclick="resetQuiz()">Start over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="washlog">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">RETURN TOOL</div>
+          <h2>Wash Log — track your car's exposure over the season</h2>
+          <p class="sub">Log each wash and this tracks how many days it's been, so you know when you're overdue instead of guessing.</p>
+        </div>
+      </div>
+      <div class="log-shell">
+        <div class="log-side">
+          <h3>Why log washes?</h3>
+          <p>Washing too often does more damage to a coating than road salt sitting for a few extra days. This tracker gives you a simple exposure reading instead of an anxious guess — and resurfaces your kit right when you'd naturally be running low. The overdue threshold follows the region you picked above (Nordic: 10 days, Ireland/Netherlands: 14 days).</p>
+          <div class="log-stats">
+            <div><div class="k">Last wash</div><div class="v" id="statLast">—</div></div>
+            <div><div class="k">Days since</div><div class="v" id="statDays">—</div></div>
+            <div><div class="k">Washes logged</div><div class="v" id="statCount">0</div></div>
+            <div><div class="k">Status</div><div class="v" id="statStatus">—</div></div>
+          </div>
+        </div>
+        <div class="log-main">
+          <div class="log-form">
+            <input type="date" id="logDate">
+            <select id="logType">
+              <option value="foam">Foam pre-wash</option>
+              <option value="full">Full contact wash</option>
+              <option value="rinse">Quick rinse only</option>
+            </select>
+            <button onclick="addLogEntry()">Log this wash</button>
+          </div>
+          <div id="logEmpty" class="log-empty">No washes logged yet — add your last wash date to get started.</div>
+          <div id="logEntries" class="log-entries" style="display:none;"></div>
+          <p class="log-note">Demo only — entries are kept in this browser tab and clear on reload. A production version would save these to your account.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guides">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">KNOWLEDGE BASE</div>
+          <h2>Latest guides</h2>
+          <p class="sub">Long-form, English-language write-ups aimed at Nordic, Irish and Dutch readers — the SEO backbone of the portal.</p>
+        </div>
+      </div>
+      <div class="silo-tabs">
+        <button class="silo-tab active" data-silo="all" onclick="setSilo('all')">All guides</button>
+        <button class="silo-tab" data-silo="winter" onclick="setSilo('winter')">Winter & Road Salt</button>
+        <button class="silo-tab" data-silo="coastal" onclick="setSilo('coastal')">Coastal & Damp Climate</button>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-card" data-silo="winter" onclick="showView('article')">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.3 6.3l2 2M15.7 15.7l2 2M17.7 6.3l-2 2M8.3 15.7l-2 2"/></svg><span class="thumb-label">BEFORE / AFTER — WHEELS</span></div>
+          <div class="guide-body">
+            <div class="cat">WHEEL & IRON CARE · WINTER</div>
+            <h3>Removing harsh road salt and iron grime from alloy wheels</h3>
+            <p>What the purple colour-change on an iron remover actually means, and why it matters after a Scandinavian winter.</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+        <div class="guide-card" data-silo="winter" onclick="showView('article')">
+          <div class="photo-thumb"><img src="https://murovtech.lv/cdn/shop/files/DSC02778.jpg?v=1783786002&width=600" alt="MUROVTECH Car Shampoo" loading="lazy"><span class="thumb-label">GUIDE — CERAMIC COATING</span></div>
+          <div class="guide-body">
+            <div class="cat">PAINT PROTECTION · WINTER</div>
+            <h3>How to wash a ceramic-coated car without ruining it</h3>
+            <p>The pH-neutral shampoo test: does your wash strip the coating you paid for, or work around it?</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+        <div class="guide-card" data-silo="winter" onclick="showView('article')">
+          <div class="photo-thumb"><img src="https://murovtech.lv/cdn/shop/files/DSC02785.jpg?v=1783786002&width=600" alt="MUROVTECH Active Foam" loading="lazy"><span class="thumb-label">GUIDE — PRE-WASH FOAM</span></div>
+          <div class="guide-body">
+            <div class="cat">EXTERIOR TECHNIQUE · WINTER</div>
+            <h3>The safe pre-wash guide: why foam matters</h3>
+            <p>Touchless snow-foam technique for lifting salt and grit before a cloth ever touches the panel.</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+        <div class="guide-card" data-silo="coastal" onclick="showView('article')">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><path d="M3 15c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M3 19c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0"/><path d="M12 4v7M9 8l3 3 3-3"/></svg><span class="thumb-label">GUIDE — SEA-SALT AIR</span></div>
+          <div class="guide-body">
+            <div class="cat">PAINT PROTECTION · COASTAL</div>
+            <h3>Why coastal air corrodes paint even when the car never sees snow</h3>
+            <p>Ireland's year-round salt spray works on trim and wheels slowly and invisibly — here's what a Dublin or Cork driver should actually watch for.</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+        <div class="guide-card" data-silo="coastal" onclick="showView('article')">
+          <div class="photo-thumb"><img src="https://murovtech.lv/cdn/shop/files/DSC02791.jpg?v=1783786002&width=600" alt="MUROVTECH Fabric Cleaner" loading="lazy"><span class="thumb-label">GUIDE — DAMP CABIN CARE</span></div>
+          <div class="guide-body">
+            <div class="cat">INTERIOR RECOVERY · COASTAL</div>
+            <h3>Stopping damp, mould and window fog in a rain-soaked climate</h3>
+            <p>What year-round humidity does to cabin trim that a single winter of snow never would, and how to break the cycle.</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+        <div class="guide-card" data-silo="coastal" onclick="showView('article')">
+          <div class="thumb-visual"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h4l4 8M10 9h3M13 9l3 4"/></svg><span class="thumb-label">GUIDE — BIKE PARKING SCUFFS</span></div>
+          <div class="guide-body">
+            <div class="cat">EXTERIOR TECHNIQUE · COASTAL</div>
+            <h3>Protecting paint and coatings from bike-parking scuffs and rain grime</h3>
+            <p>A Dutch-specific problem: dense street parking near bike racks means more contact scuffing than road-salt corrosion.</p>
+            <span class="read">Read the guide →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="spotlight">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="idx">PRODUCT SPOTLIGHT</div>
+          <h2>This month: Active Foam Pre-Wash</h2>
+        </div>
+      </div>
+      <div class="spotlight">
+        <div class="spot-visual">
+          <img src="https://murovtech.lv/cdn/shop/files/DSC02785.jpg?v=1783786002&width=800" alt="MUROVTECH Active Foam Pre-Wash">
+          <div class="spot-photo-overlay"></div>
+          <span class="cap">MUROVTECH Active Foam — official product photo</span>
+        </div>
+        <div class="spot-copy">
+          <span class="spot-badge">FEATURED THIS MONTH</span>
+          <h3>A thick, clinging foam that lifts grit before it ever touches your mitt</h3>
+          <p>High-foaming pre-wash concentrate designed to loosen road salt and grime before any contact wash, reducing the swirl marks that come from dragging grit across the paint directly.</p>
+          <div class="spot-facts">
+            <div><div class="k">Formula</div><div class="v">pH-safe</div></div>
+            <div><div class="k">Best for</div><div class="v">Pre-wash stage</div></div>
+            <div><div class="k">Season</div><div class="v">Year-round</div></div>
+          </div>
+          <div class="code-row">
+            <span>Demo checkout code:</span> <code>NORDIC10</code>
+            <span style="color:var(--text-faint);">— placeholder, not a live discount</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="fine">This is a design demo for a proposed independent affiliate portal. Product names, formulas and figures shown are illustrative and not verified claims. No purchases can be made on this page.</p>
+      <div class="fcols">
+        <div class="fcol">
+          <h4>SECTIONS</h4>
+          <a onclick="scrollToId('problems')">Problems</a>
+          <a onclick="scrollToId('quiz')">Routine Builder</a>
+          <a onclick="scrollToId('washlog')">Wash Log</a>
+        </div>
+        <div class="fcol">
+          <h4>ABOUT</h4>
+          <a>Editorial policy</a>
+          <a>Affiliate disclosure</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ ARTICLE VIEW ============ -->
+<div class="view" id="view-article">
+
+  <div class="wrap crumb">
+    <a onclick="showView('home')">Home</a> / <a onclick="showView('home');scrollToId('guides')">Paint Protection</a> / Ceramic wash guide
+  </div>
+
+  <header class="art-head">
+    <div class="wrap">
+      <div class="cat">PAINT PROTECTION · GUIDE</div>
+      <h1>How to wash a ceramic-coated car without ruining it</h1>
+      <div class="art-meta">
+        <span>9 min read</span>
+        <span>Updated for winter 2026</span>
+        <span>Sweden · Denmark · Ireland · Netherlands</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="art-body-wrap wrap">
+    <div class="art-grid">
+      <article>
+        <p>If your car has a ceramic coating, the biggest threat to it isn't scratches — it's the wrong shampoo. A lot of everyday car soap is alkaline enough to strip a coating's hydrophobic layer within a handful of washes, which is exactly why picking a <a class="aff-link" href="#">pH-neutral car shampoo</a> matters more than any brush, mitt, or towel you'll buy. This guide walks through a wash method that gets salt and grime off without touching what you paid a detailer to put on.</p>
+        <p>We'll cover the pre-wash stage, the contact wash, drying, and the one habit most people get wrong in winter: washing too often with the wrong product, out of anxiety about road salt.</p>
+
+        <h2>Why alkaline shampoo is the real enemy</h2>
+        <p>Ceramic coatings are silica-based. Most consumer car shampoo is formulated to cut through grease fast, which usually means a higher pH — great for bare paint, but slowly corrosive to the coating's bonded layer. Over a winter of weekly washes, an alkaline shampoo can measurably shorten a coating's working life, even though nothing looks wrong on the surface.</p>
+        <div class="callout">A pH-neutral formula won't just protect the coating — it also won't strip any wax layered underneath it, which matters if you've topped the ceramic with a sacrificial wax before winter.</div>
+
+        <h2>Step 1 — Pre-wash before anything touches the paint</h2>
+        <p>Road salt carries sharp mineral particles. If you go straight in with a wash mitt, you're dragging that grit across the clear coat like sandpaper. A thick pre-wash foam left to dwell for a few minutes loosens the worst of it before contact.</p>
+
+        <div class="product-box">
+          <div class="thumb"><img src="https://murovtech.lv/cdn/shop/files/DSC02785.jpg?v=1783786002&width=300" alt="MUROVTECH Active Foam Pre-Wash" loading="lazy"></div>
+          <div class="info">
+            <div class="eyebrow">FEATURED PRODUCT</div>
+            <h4>Active Foam Pre-Wash Concentrate</h4>
+            <p>High-foaming, clinging formula built to lift road salt and grit before any cloth or mitt touches the panel.</p>
+            <div class="facts">Format: <b>Concentrate</b> &nbsp;·&nbsp; Dwell time: <b>3–5 min</b> &nbsp;·&nbsp; Coating-safe: <b>Yes</b></div>
+            <a class="box-cta" href="#">Check price at official store</a>
+          </div>
+        </div>
+
+        <h3>What "coating-safe" actually means here</h3>
+        <p>It means the foam is formulated to sit within a neutral pH band, so it won't start breaking down a ceramic layer even during a longer dwell time — which matters in freezing weather, when foam sits on the panel longer before you can rinse it off comfortably.</p>
+
+        <h2>Step 2 — The contact wash</h2>
+        <p>Once the loose grit is gone, this is where the <a class="aff-link" href="#">pH-neutral shampoo</a> does its work. Use the two-bucket method — one bucket of soap solution, one of clean rinse water — so you're not reloading your wash mitt with the same salt particles you just rinsed off it.</p>
+        <ul>
+          <li>Work top to bottom, since the lower panels carry the most road grime.</li>
+          <li>Rinse the mitt in the clean bucket after every panel, not every few panels.</li>
+          <li>Avoid circular scrubbing motions — straight, overlapping passes reduce the chance of swirl marks.</li>
+        </ul>
+
+        <div class="ba-strip">
+          <div class="ba-panel before">
+            <div class="swatch"><img src="https://murovtech.lv/cdn/shop/files/MUROVTECH_BEFORE.png?v=1782403238&width=500" alt="Before cleaning"></div>
+            <div class="lbl">Dull, hazy panel with visible mineral residue</div>
+          </div>
+          <div class="ba-panel after">
+            <div class="swatch"><img src="https://murovtech.lv/cdn/shop/files/MUROVTECH_AFTER.png?v=1782403238&width=500" alt="After cleaning"></div>
+            <div class="lbl">Coating's hydrophobic sheeting restored</div>
+          </div>
+        </div>
+
+        <h2>Step 3 — Drying without undoing the work</h2>
+        <p>A rough towel introduces the swirl marks a careful wash just avoided. A clean, plush microfibre — used with light pressure, panel by panel — is worth the few extra minutes, especially in cold weather when water beads and freezes faster than you'd expect.</p>
+
+        <h2>How often is too often?</h2>
+        <p>Weekly is a reasonable cadence for a daily-driven car through a salted winter. Washing every second day "just in case" does more damage than the salt itself, because it multiplies the number of contact passes across the same panels. If you're worried about salt sitting on the car between washes, a quick rinse with plain water does most of the protective work without any chemical contact at all. This is exactly what the <a class="aff-link" href="#" onclick="showView('home');scrollToId('washlog');return false;">Wash Log tool</a> is for — it tells you when you're actually due, instead of you guessing.</p>
+
+        <h2>The takeaway</h2>
+        <p>Coating-safe washing isn't about a special technique — it's about removing one variable: an alkaline shampoo doing slow damage you won't notice until the coating's performance quietly drops off months later. Get the pH right, keep the grit off the paint before contact, and the rest is just careful technique.</p>
+      </article>
+
+      <aside class="sidebar">
+        <div class="side-card">
+          <h4>THIS GUIDE'S KIT</h4>
+          <div class="kit-item"><span>Active Foam Pre-Wash</span><a href="#">View →</a></div>
+          <div class="kit-item"><span>pH-Neutral Car Shampoo</span><a href="#">View →</a></div>
+          <div class="kit-item"><span>Plush Drying Towel</span><a href="#">View →</a></div>
+        </div>
+        <div class="side-card side-code">
+          <div style="font-size:12px;color:var(--text-faint);">DEMO CHECKOUT CODE</div>
+          <code>NORDIC10</code>
+          <div class="disclosure">Placeholder code shown for layout only — not a live discount.</div>
+        </div>
+        <div class="side-card">
+          <h4>ON THIS PAGE</h4>
+          <div class="kit-item" style="border:none;padding:6px 0;"><span style="color:var(--text-dim);">Why alkaline shampoo is the enemy</span></div>
+          <div class="kit-item" style="border:none;padding:6px 0;"><span style="color:var(--text-dim);">Step 1 — Pre-wash</span></div>
+          <div class="kit-item" style="border:none;padding:6px 0;"><span style="color:var(--text-dim);">Step 2 — Contact wash</span></div>
+          <div class="kit-item" style="border:none;padding:6px 0;"><span style="color:var(--text-dim);">Step 3 — Drying</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <section class="related">
+    <div class="wrap">
+      <h2>Related guides</h2>
+      <div class="related-grid">
+        <div class="rel-card" onclick="showView('home');scrollToId('guides')">
+          <div class="cat">WHEEL & IRON CARE</div>
+          <h3>Removing harsh road salt and iron grime from alloy wheels</h3>
+        </div>
+        <div class="rel-card" onclick="showView('home');scrollToId('guides')">
+          <div class="cat">EXTERIOR TECHNIQUE</div>
+          <h3>The safe pre-wash guide: why foam matters</h3>
+        </div>
+        <div class="rel-card" onclick="showView('home');scrollToId('guides')">
+          <div class="cat">INTERIOR RECOVERY</div>
+          <h3>How to clean and restore matte interior plastics</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="fine">Affiliate disclosure: this demo page illustrates how in-text product links, visual product boxes, and a discount banner would appear inside an article. No purchases can be made from this page and no figures are verified claims.</p>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ DILUTION CALCULATOR VIEW ============ -->
+<div class="view" id="view-calculator">
+
+  <div class="wrap crumb">
+    <a onclick="showView('home')">Home</a> / Dilution Calculator
+  </div>
+
+  <header class="calc-head">
+    <div class="wrap">
+      <div class="idx">MIXING TOOL</div>
+      <h1>Dilution Ratio Calculator</h1>
+      <p>Work out exactly how much concentrate and water to mix for the container you're filling — instead of eyeballing it and wasting product, or under-diluting and risking the coating underneath.</p>
+    </div>
+  </header>
+
+  <div class="calc-wrap wrap">
+    <div class="calc-shell">
+      <div class="calc-side">
+        <h3>Enter your mix</h3>
+
+        <div class="calc-field">
+          <label>Product (or choose "Custom" to enter your own ratio)</label>
+          <select id="calcProduct" onchange="onProductChange()">
+            <option value="custom">Custom ratio</option>
+            <option value="shampoo" data-ratio="200">Car Shampoo — 1:200</option>
+            <option value="foam" data-ratio="10">Active Foam Pre-Wash — 1:10</option>
+            <option value="wheel" data-ratio="5">Wheel Cleaner with Iron Remover — 1:5</option>
+            <option value="fabric" data-ratio="20">Fabric Cleaner — 1:20</option>
+            <option value="heavyduty" data-ratio="8">Heavy Duty Degreaser — 1:8</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label>Dilution ratio (concentrate : water)</label>
+          <div class="ratio-row">
+            <input type="number" id="calcRatioConc" value="1" min="1" oninput="calcDilution()">
+            <span>part concentrate to</span>
+            <input type="number" id="calcRatioWater" value="10" min="1" oninput="calcDilution()">
+            <span>parts water</span>
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label>Container size you're filling</label>
+          <div class="ratio-row">
+            <input type="number" id="calcVolume" value="500" min="1" oninput="calcDilution()" style="width:100%;">
+            <select id="calcUnit" onchange="calcDilution()" style="width:110px;">
+              <option value="ml">ml</option>
+              <option value="l">litres</option>
+            </select>
+          </div>
+          <div class="hint">Common sizes: 500ml spray bottle, 5L bucket, 10L pressure sprayer.</div>
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <div class="lead">YOUR MIX</div>
+        <div class="result-big">
+          <div>
+            <div class="k">Concentrate needed</div>
+            <div class="v" id="calcConcOut">—</div>
+          </div>
+          <div>
+            <div class="k">Water needed</div>
+            <div class="v" id="calcWaterOut">—</div>
+          </div>
+        </div>
+        <p class="result-note" id="calcNote">Enter a container size to see your mix.</p>
+      </div>
+    </div>
+
+    <div class="calc-presets">
+      <div class="preset-row"><span class="pname">Car Shampoo</span><span class="pratio">1:200</span><span class="puse">Two-bucket contact wash</span></div>
+      <div class="preset-row"><span class="pname">Active Foam Pre-Wash</span><span class="pratio">1:10</span><span class="puse">Foam cannon or pump sprayer</span></div>
+      <div class="preset-row"><span class="pname">Wheel Cleaner with Iron Remover</span><span class="pratio">1:5</span><span class="puse">Spray bottle, dwell 2–3 min</span></div>
+      <div class="preset-row"><span class="pname">Fabric Cleaner</span><span class="pratio">1:20</span><span class="puse">Interior upholstery spot cleaning</span></div>
+      <div class="preset-row"><span class="pname">Heavy Duty Degreaser</span><span class="pratio">1:8</span><span class="puse">Engine bay or wheel-well grime</span></div>
+    </div>
+
+    <p class="log-note" style="margin-top:24px;">Demo only — ratios shown are illustrative placeholders, not verified manufacturer specifications. Always check the actual product label before mixing.</p>
+  </div>
+
+</div>
+
+<!-- ============ GLOSSARY VIEW ============ -->
+<div class="view" id="view-glossary">
+
+  <div class="wrap crumb">
+    <a onclick="showView('home')">Home</a> / Glossary
+  </div>
+
+  <header class="gloss-head">
+    <div class="wrap">
+      <div class="idx">REFERENCE</div>
+      <h1>Car Care Glossary</h1>
+      <p>Plain-language definitions for the terms used across these guides — no jargon left unexplained. Jump to a letter or scroll through the full list.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="gloss-jump" id="glossJump"></div>
+  </div>
+
+  <div class="wrap">
+    <dl class="gloss-list" id="glossList"></dl>
+  </div>
+
+</div>
+
+<div class="sticky-bar" id="stickyBar">
+  <div class="wrap">
+    <div><strong>NORDIC10</strong> — demo discount code, shown here for layout only.</div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="claim" onclick="scrollToId('quiz')">Build my kit</button>
+      <button class="close" aria-label="Dismiss" onclick="document.getElementById('stickyBar').classList.add('hidden')">×</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---- view switcher ---- */
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+name).classList.add('active');
+    window.scrollTo({top:0});
+
+    const isB2C = (name === 'home' || name === 'article' || name === 'calculator' || name === 'glossary');
+    document.querySelectorAll('.audience-toggle button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.aud === (isB2C ? 'b2c' : 'b2b'));
+    });
+    document.getElementById('b2bNav').style.display = isB2C ? 'none' : 'flex';
+    document.getElementById('b2cNav').style.display = isB2C ? 'flex' : 'none';
+    const cta = document.getElementById('mainNavCta');
+    if(isB2C){
+      cta.textContent = 'Build my routine';
+      cta.onclick = ()=>{ showView('home'); scrollToId('quiz'); };
+    } else {
+      cta.textContent = 'Request trade pricing';
+      cta.onclick = ()=>{ showView('b2b'); scrollToId('b2b-contact'); };
+    }
+  }
+  function scrollToId(id){
+    setTimeout(()=>{
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    }, 30);
+  }
+
+  /* ---- Glossary ---- */
+  const glossaryTerms = [
+    {term:'Ceramic Coating', def:'A liquid silica-based layer applied to paint that bonds to the clear coat, creating a hard, hydrophobic surface. Lasts years rather than weeks, but needs pH-neutral products to avoid slowly breaking down.'},
+    {term:'Clay Bar', def:'A soft synthetic clay used to lift embedded contamination — tar, tree sap, industrial fallout — off paint that washing alone can\'t remove. Used before waxing or coating, not as a routine wash step.'},
+    {term:'Contact Wash', def:'The stage of washing where a mitt or sponge physically touches the paint, as opposed to a touchless pre-wash. Where most swirl marks originate if done carelessly.'},
+    {term:'Dwell Time', def:'How long a product is left sitting on a surface before being agitated or rinsed off. Too short and it doesn\'t work; too long and some formulas can start affecting the surface underneath.'},
+    {term:'Hydrophobic', def:'A surface that repels water, causing it to bead and roll off rather than sheet flat. A sign a wax, sealant, or ceramic coating is still active.'},
+    {term:'Iron Fallout', def:'Tiny metal particles — mostly brake dust and rail dust — that embed in paint and wheels. Iron removers react with these particles, often turning purple, to make them safe to rinse away.'},
+    {term:'Microfibre Towel', def:'A soft synthetic weave used for drying or wiping. Far less likely to cause swirl marks than a cotton towel or chamois, especially with light pressure.'},
+    {term:'pH-Neutral', def:'A product formulated close to neutral pH (around 7), meaning it cleans without the alkalinity that can strip wax, sealant, or ceramic coatings over repeated washes.', see:'How to wash a ceramic-coated car without ruining it'},
+    {term:'Sealant', def:'A synthetic paint protection product, similar in purpose to wax but generally longer-lasting and more resistant to detergents. A middle ground between wax and ceramic coating.'},
+    {term:'Snow Foam / Pre-Wash', def:'A thick foam applied before any physical contact with the paint, designed to loosen dirt and grit so it rinses away rather than getting dragged across the surface by a mitt.', see:'The safe pre-wash guide: why foam matters'},
+    {term:'Swirl Marks', def:'Fine circular scratches in the clear coat, usually caused by washing or drying with a dirty or rough cloth, or using circular motions instead of straight passes.'},
+    {term:'Two-Bucket Method', def:'A washing technique using one bucket of soap solution and one of clean rinse water, so the wash mitt is rinsed of grit before being reloaded with soap — reducing the swirl marks a single-bucket wash causes.'},
+    {term:'Wax', def:'A natural or synthetic paste or liquid applied over paint for shine and short-term protection, typically lasting weeks to a couple of months before needing to be reapplied.'},
+    {term:'Wheel Well', def:'The cavity around each wheel where road salt, grit, and brake dust accumulate most heavily — often overlooked in a standard wash, but a common starting point for corrosion.'}
+  ];
+
+  function renderGlossary(){
+    const sorted = [...glossaryTerms].sort((a,b)=> a.term.localeCompare(b.term));
+    const lettersPresent = new Set(sorted.map(t => t.term[0].toUpperCase()));
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+    const jumpEl = document.getElementById('glossJump');
+    jumpEl.innerHTML = '';
+    alphabet.forEach(letter=>{
+      const btn = document.createElement('button');
+      btn.textContent = letter;
+      if(lettersPresent.has(letter)){
+        btn.classList.add('has-terms');
+        btn.onclick = ()=> document.getElementById('gloss-'+letter).scrollIntoView({behavior:'smooth'});
+      } else {
+        btn.disabled = true;
+      }
+      jumpEl.appendChild(btn);
+    });
+
+    const listEl = document.getElementById('glossList');
+    listEl.innerHTML = '';
+    let currentLetter = '';
+    sorted.forEach(item=>{
+      const letter = item.term[0].toUpperCase();
+      if(letter !== currentLetter){
+        currentLetter = letter;
+        const h = document.createElement('div');
+        h.className = 'gloss-letter';
+        h.id = 'gloss-'+letter;
+        h.textContent = letter;
+        listEl.appendChild(h);
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'gloss-term';
+      let html = '<dt>'+item.term+'</dt><dd>'+item.def;
+      if(item.see){
+        html += '<br><span class="see-also" onclick="showView(\'article\')">See: '+item.see+' →</span>';
+      }
+      html += '</dd>';
+      wrap.innerHTML = html;
+      listEl.appendChild(wrap);
+    });
+  }
+  renderGlossary();
+
+  /* ---- Current conditions strip ---- */
+  // In production this array would be replaced by a cached daily fetch
+  // from a weather API (e.g. temp + precipitation) plus, where available,
+  // a public road-gritting feed -- rendered server-side once per day,
+  // not called live per visitor.
+  const conditionsData = {
+    nordic: [
+      'Below freezing overnight — salt spreading likely on main roads. Rinse within 3 days if parked outside.',
+      'Fresh snowfall reported — expect heavier grit and salt buildup on lower panels this week.',
+      'Mild spell, roads clear — good window for a full contact wash before the next cold front.',
+      'Sub-zero and dry — salt residue won\'t rinse in rain, plan an active wash this week.'
+    ],
+    ireland: [
+      'Onshore wind and rain today — coastal salt spray exposure is elevated on the east and south coasts.',
+      'Dry spell inland — a lower-risk window for paint correction or coating maintenance.',
+      'Heavy rain forecast — good week to check door seals and boot trim for trapped damp.',
+      'Calm coastal conditions — salt spray exposure is at its lowest this week.'
+    ],
+    netherlands: [
+      'Persistent damp conditions — check cabin trim and window seals for condensation buildup.',
+      'Light rain, mild temperatures — low road-salt week, focus on street-parking scuff marks instead.',
+      'Drier spell expected — a good window for a full exterior wash and coating top-up.',
+      'Wet and windy — bike-lane spray is likely on lower doors and sills this week.'
+    ]
+  };
+
+  function renderConditions(region){
+    const list = conditionsData[region];
+    // Seed by day-of-year so the message is stable all day and rotates daily,
+    // rather than reshuffling on every page load.
+    const now = new Date();
+    const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+    const index = dayOfYear % list.length;
+
+    document.getElementById('csLabel').textContent = 'CURRENT CONDITIONS · ' + region.toUpperCase();
+    document.getElementById('csText').textContent = list[index];
+    document.getElementById('csUpdated').textContent =
+      'Updated ' + now.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+  }
+  renderConditions('nordic');
+
+  /* ---- Region toggle (hero readout) ---- */
+  const regionData = {
+    nordic: {
+      tag: 'REGION: NORDIC',
+      headline: 'Protect your car from <span class="hl">road salt, rain and grime</span>, without guessing at the chemistry',
+      lede: "A field guide to pH-safe car care for Sweden and Denmark — built for people who'd rather read one clear answer than fifty conflicting forum threads.",
+      stats: [
+        {k:'Avg. winter road salt use', v:'High'},
+        {k:'Iron contamination risk', v:'Elevated'},
+        {k:'Safe wash interval', v:'7–10 days'},
+        {k:'Coating at risk', v:'Wax / Ceramic'}
+      ],
+      desc: 'Illustrative figures for this demo portal — in production this panel would pull live regional road-salt data to justify wash frequency recommendations.',
+      washInterval: 10
+    },
+    ireland: {
+      tag: 'REGION: IRELAND',
+      headline: 'Protect your car from <span class="hl">year-round sea-salt air and rain</span>, without guessing at the chemistry',
+      lede: "A field guide to pH-safe car care for Ireland — built for people who'd rather read one clear answer than fifty conflicting forum threads.",
+      stats: [
+        {k:'Avg. coastal salt exposure', v:'Constant'},
+        {k:'Iron contamination risk', v:'Moderate'},
+        {k:'Safe wash interval', v:'10–14 days'},
+        {k:'Coating at risk', v:'Trim / Wax'}
+      ],
+      desc: 'Illustrative figures for this demo portal — Ireland sees less road-salt grit than Scandinavia but near-constant coastal salt air, so the exposure profile is steadier rather than seasonal.',
+      washInterval: 14
+    },
+    netherlands: {
+      tag: 'REGION: NETHERLANDS',
+      headline: 'Protect your car from <span class="hl">rain, damp and street-parking grime</span>, without guessing at the chemistry',
+      lede: "A field guide to pH-safe car care for the Netherlands — built for people who'd rather read one clear answer than fifty conflicting forum threads.",
+      stats: [
+        {k:'Avg. road salt use', v:'Low–moderate'},
+        {k:'Humidity / damp risk', v:'High'},
+        {k:'Safe wash interval', v:'10–14 days'},
+        {k:'Coating at risk', v:'Cabin trim'}
+      ],
+      desc: 'Illustrative figures for this demo portal — Dutch winters bring less road salt than Nordic ones, so damp-related cabin care and street-parking scuffs matter more than iron fallout.',
+      washInterval: 14
+    }
+  };
+
+  function setRegion(region){
+    const data = regionData[region];
+    document.querySelectorAll('.region-toggle button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.region === region);
+    });
+    document.getElementById('readoutRegionTag').textContent = data.tag;
+    document.getElementById('heroHeadline').innerHTML = data.headline;
+    document.getElementById('heroLede').textContent = data.lede;
+    document.getElementById('readoutDesc').textContent = data.desc;
+    const statsEl = document.getElementById('readoutStats');
+    statsEl.innerHTML = '';
+    data.stats.forEach(s=>{
+      const div = document.createElement('div');
+      div.innerHTML = '<div class="k">'+s.k+'</div><div class="v">'+s.v+'</div>';
+      statsEl.appendChild(div);
+    });
+    currentWashInterval = data.washInterval;
+    renderLog();
+    renderConditions(region);
+  }
+
+  /* ---- Guide silo filter ---- */
+  function setSilo(silo){
+    document.querySelectorAll('.silo-tab').forEach(t=>{
+      t.classList.toggle('active', t.dataset.silo === silo);
+    });
+    document.querySelectorAll('.guide-card').forEach(card=>{
+      const show = silo === 'all' || card.dataset.silo === silo;
+      card.classList.toggle('silo-hidden', !show);
+    });
+  }
+
+  /* ---- Routine Builder quiz (in-memory only) ---- */
+  const answers = {0:null,1:null,2:null};
+  const steps = document.querySelectorAll('.q-step');
+  const progressDots = document.querySelectorAll('#progress span');
+
+  function updateProgress(activeIndex){
+    progressDots.forEach(d=>{
+      d.classList.toggle('done', parseInt(d.dataset.i) < activeIndex);
+    });
+  }
+
+  document.querySelectorAll('.opt').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const q = opt.dataset.q;
+      const v = opt.dataset.v;
+      answers[q] = v;
+      document.querySelectorAll('.opt[data-q="'+q+'"]').forEach(o=>o.classList.remove('selected'));
+      opt.classList.add('selected');
+      setTimeout(()=>{
+        const nextStep = parseInt(q) + 1;
+        steps.forEach(s=>s.classList.remove('active'));
+        if(nextStep < 3){
+          document.querySelector('.q-step[data-step="'+nextStep+'"]').classList.add('active');
+          updateProgress(nextStep);
+        } else {
+          showResult();
+          updateProgress(3);
+        }
+      }, 220);
+    });
+  });
+
+  function showResult(){
+    const result = document.querySelector('.q-result');
+    result.classList.add('active');
+    const kit = [];
+    if(answers[1] === 'ceramic' || answers[1] === 'wax'){
+      kit.push({name:'pH-Neutral Car Shampoo', why:'Safe on your existing coating'});
+    } else {
+      kit.push({name:'Active Foam Pre-Wash', why:'Lifts grit before contact'});
+    }
+    if(answers[2] === 'wheels'){
+      kit.push({name:'Wheel Cleaner with Iron Remover', why:'Targets road-salt & brake dust'});
+    } else if(answers[2] === 'interior'){
+      kit.push({name:'Fabric Cleaner', why:'Lifts winter stains from carpet'});
+    } else {
+      kit.push({name:'Insect & Tar Remover', why:'Breaks down residue safely'});
+    }
+    if(answers[0] === 'home'){
+      kit.push({name:'Microfibre Drying Towel', why:'Prevents cold-weather swirl marks'});
+    }
+    const list = document.getElementById('kitList');
+    list.innerHTML = '';
+    kit.forEach(item=>{
+      const row = document.createElement('div');
+      row.className = 'kit-item';
+      row.innerHTML = '<span class="name">'+item.name+'</span><span class="why">'+item.why+'</span>';
+      list.appendChild(row);
+    });
+    document.getElementById('resultHeadline').textContent =
+      'Your ' + (answers[1]==='ceramic' ? 'ceramic-safe' : answers[1]==='wax' ? 'wax-safe' : 'starter') + ' winter kit';
+  }
+  function resetQuiz(){
+    answers[0]=answers[1]=answers[2]=null;
+    document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+    document.querySelectorAll('.q-step, .q-result').forEach(s=>s.classList.remove('active'));
+    document.querySelector('.q-step[data-step="0"]').classList.add('active');
+    updateProgress(0);
+  }
+  updateProgress(0);
+
+  /* ---- Wash Log tracker (in-memory only, resets on reload) ---- */
+  let washLog = [];
+  let currentWashInterval = regionData.nordic.washInterval;
+  const typeLabels = {foam:'Foam pre-wash', full:'Full contact wash', rinse:'Quick rinse only'};
+
+  document.getElementById('logDate').valueAsDate = new Date();
+
+  function addLogEntry(){
+    const dateVal = document.getElementById('logDate').value;
+    const typeVal = document.getElementById('logType').value;
+    if(!dateVal) return;
+    washLog.push({date:dateVal, type:typeVal});
+    washLog.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    renderLog();
+  }
+
+  function removeLogEntry(index){
+    washLog.splice(index,1);
+    renderLog();
+  }
+
+  function renderLog(){
+    const entriesEl = document.getElementById('logEntries');
+    const emptyEl = document.getElementById('logEmpty');
+    if(washLog.length === 0){
+      emptyEl.style.display = 'block';
+      entriesEl.style.display = 'none';
+      document.getElementById('statLast').textContent = '—';
+      document.getElementById('statDays').textContent = '—';
+      document.getElementById('statCount').textContent = '0';
+      document.getElementById('statStatus').textContent = '—';
+      return;
+    }
+    emptyEl.style.display = 'none';
+    entriesEl.style.display = 'flex';
+    entriesEl.innerHTML = '';
+    washLog.forEach((entry, i)=>{
+      const row = document.createElement('div');
+      row.className = 'log-entry';
+      const d = new Date(entry.date);
+      const dateStr = d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+      row.innerHTML = '<span>'+dateStr+' <span class="meta">— '+typeLabels[entry.type]+'</span></span>'+
+        '<button class="del" onclick="removeLogEntry('+i+')" aria-label="Remove entry">×</button>';
+      entriesEl.appendChild(row);
+    });
+
+    const last = washLog[0];
+    const lastDate = new Date(last.date);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    lastDate.setHours(0,0,0,0);
+    const daysSince = Math.round((today - lastDate) / 86400000);
+
+    document.getElementById('statLast').textContent = lastDate.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+    document.getElementById('statDays').textContent = daysSince;
+    document.getElementById('statCount').textContent = washLog.length;
+
+    let status = 'On schedule';
+    if(daysSince > currentWashInterval) status = 'Overdue';
+    else if(daysSince < 4) status = 'Recently washed';
+    document.getElementById('statStatus').textContent = status;
+  }
+  renderLog();
+
+  /* ---- B2B Cost-Per-Wash Calculator ---- */
+  function calcCostPerWash(){
+    const price = parseFloat(document.getElementById('b2bPrice').value) || 0;
+    let size = parseFloat(document.getElementById('b2bSize').value) || 0;
+    const sizeUnit = document.getElementById('b2bSizeUnit').value;
+    const concParts = parseFloat(document.getElementById('b2bRatioConc').value) || 1;
+    const waterParts = parseFloat(document.getElementById('b2bRatioWater').value) || 0;
+    const mlPerWash = parseFloat(document.getElementById('b2bMlPerWash').value) || 0;
+
+    const sizeMl = sizeUnit === 'l' ? size * 1000 : size;
+    if(sizeMl <= 0 || mlPerWash <= 0 || price <= 0){
+      document.getElementById('b2bCostOut').textContent = '—';
+      document.getElementById('b2bWashesOut').textContent = '—';
+      document.getElementById('b2bNote').textContent = 'Enter your numbers to see the cost per wash.';
+      return;
+    }
+
+    // mlPerWash is concentrate used per wash before dilution
+    const washesPerContainer = sizeMl / mlPerWash;
+    const costPerWash = price / washesPerContainer;
+    const dilutedYieldPerWash = mlPerWash * (concParts + waterParts) / concParts;
+
+    document.getElementById('b2bCostOut').innerHTML = '€' + costPerWash.toFixed(3);
+    document.getElementById('b2bWashesOut').textContent = Math.floor(washesPerContainer).toLocaleString();
+    document.getElementById('b2bNote').textContent =
+      'At a ' + concParts + ':' + waterParts + ' ratio, ' + mlPerWash + 'ml concentrate yields about ' +
+      Math.round(dilutedYieldPerWash) + 'ml of ready-to-use solution per wash — roughly ' +
+      Math.floor(washesPerContainer).toLocaleString() + ' washes from this container.';
+  }
+  calcCostPerWash();
+
+  /* ---- Dilution Ratio Calculator ---- */
+  function onProductChange(){
+    const select = document.getElementById('calcProduct');
+    const opt = select.options[select.selectedIndex];
+    const ratio = opt.getAttribute('data-ratio');
+    if(ratio){
+      document.getElementById('calcRatioConc').value = 1;
+      document.getElementById('calcRatioWater').value = ratio;
+    }
+    calcDilution();
+  }
+
+  function calcDilution(){
+    const concParts = parseFloat(document.getElementById('calcRatioConc').value) || 0;
+    const waterParts = parseFloat(document.getElementById('calcRatioWater').value) || 0;
+    const volumeRaw = parseFloat(document.getElementById('calcVolume').value) || 0;
+    const unit = document.getElementById('calcUnit').value;
+    const totalVolumeMl = unit === 'l' ? volumeRaw * 1000 : volumeRaw;
+
+    const totalParts = concParts + waterParts;
+    if(totalParts <= 0 || totalVolumeMl <= 0){
+      document.getElementById('calcConcOut').innerHTML = '—';
+      document.getElementById('calcWaterOut').innerHTML = '—';
+      document.getElementById('calcNote').textContent = 'Enter a container size to see your mix.';
+      return;
+    }
+
+    const concMl = (concParts / totalParts) * totalVolumeMl;
+    const waterMl = totalVolumeMl - concMl;
+
+    document.getElementById('calcConcOut').innerHTML = formatMl(concMl);
+    document.getElementById('calcWaterOut').innerHTML = formatMl(waterMl);
+    document.getElementById('calcNote').textContent =
+      'Mix ' + formatMl(concMl).replace(/<[^>]+>/g,'') + ' concentrate with ' + formatMl(waterMl).replace(/<[^>]+>/g,'') +
+      ' water for a ' + concParts + ':' + waterParts + ' ratio in ' + (unit === 'l' ? volumeRaw + 'L' : volumeRaw + 'ml') + ' total.';
+  }
+
+  function formatMl(ml){
+    if(ml >= 1000){
+      return (ml/1000).toFixed(2).replace(/\.00$/,'') + ' <small>L</small>';
+    }
+    return Math.round(ml) + ' <small>ml</small>';
+  }
+  calcDilution();
+
+  /* ---- reading progress bar ---- */
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('readProgress').style.width = scrolled + '%';
+  });
+</script>
+
+</body>
+</html>
