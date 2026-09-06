@@ -31,6 +31,51 @@
     .navcta{display:none;}
   }
 
+  /* ===== CASE STUDIES PAGE ===== */
+  .cs-head{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+  .cs-head .idx{font-size:12px;color:var(--ice-dim);font-family:'Oswald',sans-serif;margin-bottom:10px;}
+  .cs-head h1{font-size:34px;line-height:1.15;max-width:26ch;margin-bottom:14px;}
+  .cs-head p{font-size:15px;color:var(--text-dim);max-width:60ch;}
+  .cs-jump{display:flex;gap:10px;padding:24px 0;flex-wrap:wrap;border-bottom:1px solid var(--line);}
+  .cs-jump button{background:none;border:1px solid var(--line);color:var(--text-dim);padding:9px 16px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .cs-jump button:hover{border-color:var(--ice-dim);color:var(--ice);}
+
+  .case-block{padding:64px 0;border-bottom:1px solid var(--line);}
+  .case-photo{height:280px;overflow:hidden;position:relative;margin-bottom:32px;}
+  .case-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(0.85) brightness(0.75);}
+  .case-photo-overlay{position:absolute;inset:0;background:linear-gradient(0deg, rgba(14,21,32,0.75) 0%, transparent 45%);display:flex;align-items:flex-end;padding:20px 24px;}
+  .case-photo-overlay .cat{font-size:11.5px;color:var(--amber);letter-spacing:0.5px;}
+  .case-title h2{font-size:26px;margin-bottom:8px;}
+  .case-title .loc{font-size:13px;color:var(--text-faint);margin-bottom:28px;}
+  .case-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:32px;}
+  .case-stats div{background:var(--bg-2);padding:16px;}
+  .case-stats .k{font-size:11px;color:var(--text-faint);margin-bottom:6px;}
+  .case-stats .v{font-size:19px;font-family:'Oswald',sans-serif;color:var(--ice);}
+  .case-body{max-width:74ch;font-size:15.5px;color:var(--text-dim);}
+  .case-body h3{font-size:17px;color:var(--text);margin:28px 0 12px;font-weight:600;}
+  .case-body p{margin:0 0 18px;}
+  .case-quote{border-left:2px solid var(--ice);padding:6px 0 6px 20px;margin:28px 0;font-size:16px;color:var(--text);font-style:italic;}
+  .case-quote .attr{display:block;margin-top:8px;font-size:12.5px;color:var(--text-faint);font-style:normal;}
+  @media (max-width:700px){
+    .case-stats{grid-template-columns:1fr 1fr;}
+    .case-photo{height:180px;}
+    .cs-head h1{font-size:26px;}
+  }
+  /* ===== CASE STUDIES PAGE END ===== */
+
+  /* ===== B2B PHOTO BANNER ===== */
+  .b2b-banner{position:relative;height:280px;overflow:hidden;border-bottom:1px solid var(--line);}
+  .b2b-banner img{width:100%;height:100%;object-fit:cover;filter:saturate(0.8) brightness(0.55);}
+  .b2b-banner-overlay{position:absolute;inset:0;background:linear-gradient(100deg, var(--bg) 15%, rgba(14,21,32,0.55) 50%, rgba(14,21,32,0.25) 100%);display:flex;align-items:center;}
+  .b2b-banner-text{max-width:520px;padding:0 24px;}
+  .b2b-banner-text .kicker{font-size:11.5px;color:var(--ice);letter-spacing:0.6px;margin-bottom:10px;}
+  .b2b-banner-text h3{font-size:24px;line-height:1.25;color:var(--text);}
+  @media (max-width:700px){
+    .b2b-banner{height:220px;}
+    .b2b-banner-text h3{font-size:19px;}
+  }
+  /* ===== B2B PHOTO BANNER END ===== */
+
   /* ===== B2B PRICING TIERS ===== */
   .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .pricing-card{border:1px solid var(--line);background:var(--bg-2);padding:28px 24px;display:flex;flex-direction:column;}
@@ -525,7 +570,7 @@
       <a onclick="showView('b2b');scrollToId('b2b-pain')">Why Switch</a>
       <a onclick="showView('b2b');scrollToId('b2b-pricing')">Pricing</a>
       <a onclick="showView('b2b');scrollToId('b2b-costcalc')">Cost Calculator</a>
-      <a onclick="showView('b2b');scrollToId('b2b-cases')">Case Studies</a>
+      <a onclick="showView('casestudies')">Case Studies</a>
     </nav>
     <nav class="mainnav nav-hidden" id="b2cNav">
       <a onclick="showView('home');scrollToId('problems')">Problems</a>
@@ -552,7 +597,7 @@
     <a onclick="showView('b2b');scrollToId('b2b-pain');closeMobileMenu()">Why Switch</a>
     <a onclick="showView('b2b');scrollToId('b2b-pricing');closeMobileMenu()">Pricing</a>
     <a onclick="showView('b2b');scrollToId('b2b-costcalc');closeMobileMenu()">Cost Calculator</a>
-    <a onclick="showView('b2b');scrollToId('b2b-cases');closeMobileMenu()">Case Studies</a>
+    <a onclick="showView('casestudies');closeMobileMenu()">Case Studies</a>
     <a onclick="showView('b2b');scrollToId('b2b-contact');closeMobileMenu()">Request Pricing</a>
   </nav>
   <nav class="mobile-nav-group" id="mobileB2cNav">
@@ -578,8 +623,8 @@
 <div class="view active" id="view-b2b">
 
   <header class="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="https://assets.mixkit.co/videos/49200/49200-thumb-360-2.jpg">
-      <source src="https://assets.mixkit.co/videos/49200/49200-360.mp4" type="video/mp4">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://assets.mixkit.co/videos/47830/47830-thumb-360-3.jpg">
+      <source src="https://assets.mixkit.co/videos/47830/47830-360.mp4" type="video/mp4">
     </video>
     <div class="hero-video-overlay"></div>
     <div class="wrap">
@@ -650,6 +695,16 @@
       </div>
     </div>
   </section>
+
+  <div class="b2b-banner">
+    <img src="https://assets.mixkit.co/videos/47588/47588-thumb-360-2.jpg" alt="Professional applying cleaning solution to a car">
+    <div class="b2b-banner-overlay">
+      <div class="b2b-banner-text">
+        <div class="kicker">USED IN REAL DETAILING BAYS</div>
+        <h3>The same pH-safe formulas run daily in Mārtiņš's own Jelgava workshop — not just bottled for retail.</h3>
+      </div>
+    </div>
+  </div>
 
   <section id="b2b-pricing">
     <div class="wrap">
@@ -764,8 +819,8 @@
         </div>
       </div>
       <div class="guide-grid">
-        <div class="guide-card">
-          <div class="thumb-visual"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg><span class="thumb-label">DETAILING STUDIO — JELGAVA</span></div>
+        <div class="guide-card" onclick="showView('casestudies');scrollToId('case-studio')">
+          <div class="photo-thumb"><img src="https://assets.mixkit.co/videos/47834/47834-thumb-360-3.jpg" alt="Detailer polishing a car panel" loading="lazy"><span class="thumb-label">DETAILING STUDIO — JELGAVA</span></div>
           <div class="guide-body">
             <div class="cat">CASE STUDY</div>
             <h3>Cutting product cost per wash by switching to bulk concentrate</h3>
@@ -773,8 +828,8 @@
             <span class="read">Read the case study →</span>
           </div>
         </div>
-        <div class="guide-card">
-          <div class="thumb-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M5 17h-2v-4l3-5h7l3 5h1v4h-2M9 8V5h5"/></svg><span class="thumb-label">CAR WASH — MULTI-BAY</span></div>
+        <div class="guide-card" onclick="showView('casestudies');scrollToId('case-carwash')">
+          <div class="photo-thumb"><img src="https://assets.mixkit.co/videos/47586/47586-thumb-360-0.jpg" alt="Car being washed down at a car wash" loading="lazy"><span class="thumb-label">CAR WASH — MULTI-BAY</span></div>
           <div class="guide-body">
             <div class="cat">CASE STUDY</div>
             <h3>Standardising results across four bays and three shifts</h3>
@@ -782,8 +837,8 @@
             <span class="read">Read the case study →</span>
           </div>
         </div>
-        <div class="guide-card">
-          <div class="thumb-visual"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2"/></svg><span class="thumb-label">MOBILE DETAILER — FLEET</span></div>
+        <div class="guide-card" onclick="showView('casestudies');scrollToId('case-fleet')">
+          <div class="photo-thumb"><img src="https://assets.mixkit.co/videos/49199/49199-thumb-360-3.jpg" alt="Aerial view of a car being washed" loading="lazy"><span class="thumb-label">MOBILE DETAILER — FLEET</span></div>
           <div class="guide-body">
             <div class="cat">CASE STUDY</div>
             <h3>Matching delivery cadence to actual weekly volume</h3>
@@ -791,6 +846,9 @@
             <span class="read">Read the case study →</span>
           </div>
         </div>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn-ghost" onclick="showView('casestudies')">View all case studies →</button>
       </div>
     </div>
   </section>
@@ -841,13 +899,144 @@
           <h4>FOR BUSINESS</h4>
           <a onclick="scrollToId('b2b-pricing')">Pricing</a>
           <a onclick="scrollToId('b2b-costcalc')">Cost Calculator</a>
-          <a onclick="scrollToId('b2b-cases')">Case Studies</a>
+          <a onclick="showView('casestudies')">Case Studies</a>
         </div>
         <div class="fcol">
           <h4>FOR DRIVERS</h4>
           <a onclick="showView('home')">Consumer site →</a>
         </div>
       </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ CASE STUDIES VIEW ============ -->
+<div class="view" id="view-casestudies">
+
+  <div class="wrap crumb">
+    <a onclick="showView('b2b')">For Business</a> / Case Studies
+  </div>
+
+  <header class="cs-head">
+    <div class="wrap">
+      <div class="idx">CASE STUDIES</div>
+      <h1>What switching to trade pricing actually looks like</h1>
+      <p>Three illustrative scenarios for this demo — a real version would carry verified studio names, locations, and audited before/after figures rather than placeholder numbers.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="cs-jump">
+      <button onclick="scrollToId('case-studio')">Detailing Studio</button>
+      <button onclick="scrollToId('case-carwash')">Multi-Bay Car Wash</button>
+      <button onclick="scrollToId('case-fleet')">Mobile Fleet</button>
+    </div>
+  </div>
+
+  <section class="case-block" id="case-studio">
+    <div class="wrap">
+      <div class="case-photo">
+        <img src="https://assets.mixkit.co/videos/47834/47834-thumb-360-3.jpg" alt="Detailer polishing a car panel">
+        <div class="case-photo-overlay"><span class="cat">DETAILING STUDIO — JELGAVA</span></div>
+      </div>
+      <div class="case-title">
+        <h2>Cutting product cost per wash by switching to bulk concentrate</h2>
+        <div class="loc">Independent single-bay detailing studio · ~40 vehicles/month</div>
+      </div>
+      <div class="case-stats">
+        <div><div class="k">Before</div><div class="v">€2.10/wash</div></div>
+        <div><div class="k">After</div><div class="v">€1.30/wash</div></div>
+        <div><div class="k">Monthly saving</div><div class="v">~€32</div></div>
+        <div><div class="k">Switch time</div><div class="v">1 delivery</div></div>
+      </div>
+      <div class="case-body">
+        <h3>The problem</h3>
+        <p>The studio was buying five separate retail-sized bottles — shampoo, foam, wheel cleaner, fabric cleaner, glass cleaner — reordering each on a different schedule, with no fixed dilution guidance beyond what was printed on each label.</p>
+        <h3>The switch</h3>
+        <p>Moving to two bulk concentrate drums (a general-purpose shampoo and a heavy-duty degreaser) with a single laminated dilution chart pinned above the mixing station removed the guesswork for whoever was on shift that day.</p>
+        <h3>The result</h3>
+        <p>Cost per wash dropped mainly from eliminating over-dilution — staff had been mixing roughly 30% stronger than needed "to be safe." A fixed ratio chart closed that gap without changing the wash process itself.</p>
+        <div class="case-quote">
+          "We didn't change how we wash cars. We changed how much product each wash actually needed."
+          <span class="attr">— Illustrative studio owner quote, for demo purposes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-block" id="case-carwash">
+    <div class="wrap">
+      <div class="case-photo">
+        <img src="https://assets.mixkit.co/videos/47586/47586-thumb-360-0.jpg" alt="Car being washed down at a car wash">
+        <div class="case-photo-overlay"><span class="cat">CAR WASH — MULTI-BAY</span></div>
+      </div>
+      <div class="case-title">
+        <h2>Standardising results across four bays and three shifts</h2>
+        <div class="loc">Multi-bay self-service car wash · ~600 vehicles/month</div>
+      </div>
+      <div class="case-stats">
+        <div><div class="k">Bays</div><div class="v">4</div></div>
+        <div><div class="k">Shifts</div><div class="v">3</div></div>
+        <div><div class="k">Complaint rate before</div><div class="v">~6%</div></div>
+        <div><div class="k">Complaint rate after</div><div class="v">~2%</div></div>
+      </div>
+      <div class="case-body">
+        <h3>The problem</h3>
+        <p>Customer complaints clustered around inconsistency — a car washed on the morning shift looked noticeably better than the same service run on a weekend evening shift, despite using the same nominal product.</p>
+        <h3>The switch</h3>
+        <p>Rather than changing the wash equipment, the site introduced a single dilution chart per product and a short training session for each shift lead, so every bay was mixing to the same ratio regardless of who was working.</p>
+        <h3>The result</h3>
+        <p>Complaint volume tied to "patchy" results fell, without any hardware or process change — the variance had been coming from inconsistent mixing, not the wash cycle itself.</p>
+        <div class="case-quote">
+          "The equipment was never the problem. The bottle-to-bucket ratio was different on every shift."
+          <span class="attr">— Illustrative site manager quote, for demo purposes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-block" id="case-fleet" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="case-photo">
+        <img src="https://assets.mixkit.co/videos/49199/49199-thumb-360-3.jpg" alt="Aerial view of a car being washed">
+        <div class="case-photo-overlay"><span class="cat">MOBILE DETAILER — FLEET</span></div>
+      </div>
+      <div class="case-title">
+        <h2>Matching delivery cadence to actual weekly volume</h2>
+        <div class="loc">Mobile detailing operator, 2 vans · ~90 call-outs/month</div>
+      </div>
+      <div class="case-stats">
+        <div><div class="k">Stockouts before</div><div class="v">~2/month</div></div>
+        <div><div class="k">Stockouts after</div><div class="v">0</div></div>
+        <div><div class="k">Order pattern</div><div class="v">Ad-hoc → scheduled</div></div>
+        <div><div class="k">Delivery cadence</div><div class="v">Monthly</div></div>
+      </div>
+      <div class="case-body">
+        <h3>The problem</h3>
+        <p>Buying retail bottles as needed meant occasionally running out mid-week — a call-out with a half-empty bottle of shampoo isn't a good look for a mobile service that's supposed to bring everything with it.</p>
+        <h3>The switch</h3>
+        <p>A trade account with a fixed monthly delivery, sized to average call-out volume plus a small buffer, replaced ad-hoc retail purchases entirely.</p>
+        <h3>The result</h3>
+        <p>Zero stockouts since switching, and less time spent making unplanned retail runs between jobs — the operator now orders once a month instead of reactively.</p>
+        <div class="case-quote">
+          "I used to find out I was low on shampoo in someone's driveway. Now I find out a week before I'd need to."
+          <span class="attr">— Illustrative mobile detailer quote, for demo purposes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" style="text-align:center;">
+      <h2 style="font-size:22px;margin-bottom:16px;">Want to see what this looks like for your business?</h2>
+      <button class="btn-primary" onclick="showView('b2b');scrollToId('b2b-contact')">Request trade pricing</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="fine">These case studies are illustrative placeholders built for this demo and do not represent real customers, verified figures, or actual quotes. A live version would only publish case studies with the named business's consent and audited numbers.</p>
     </div>
   </footer>
 
