@@ -421,8 +421,51 @@
     .related-grid{grid-template-columns:1fr;}
     .ba-strip{grid-template-columns:1fr;}
   }
+
+  /* ===== SMALL PHONE (~480px and under) ===== */
+  @media (max-width:480px){
+    .wrap{padding:0 16px;}
+    .topbar .wrap{height:56px;}
+    .logo{font-size:16px;}
+    .navcta{padding:7px 10px;font-size:11.5px;}
+    .conditions-strip .wrap{height:auto;padding:8px 0;flex-wrap:wrap;gap:8px;}
+    .conditions-strip .cs-text{white-space:normal;overflow:visible;}
+    .hero{padding:36px 0 32px;}
+    .kicker-line{font-size:11px;}
+    .hero h1{font-size:25px;line-height:1.15;}
+    .hero p.lede{font-size:14px;}
+    .hero-actions{flex-direction:column;align-items:stretch;}
+    .hero-actions button{width:100%;text-align:center;}
+    .panel{padding:16px;}
+    .readout{grid-template-columns:1fr 1fr;gap:8px;}
+    .readout div{padding:9px;}
+    .readout .v{font-size:17px;}
+    .region-toggle button{padding:8px 4px;font-size:11px;}
+    section{padding:40px 0;}
+    .sec-head h2{font-size:21px;}
+    .sec-head .sub{font-size:13px;}
+    .problem-card,.pricing-card{padding:20px 16px;}
+    .problem-photo{margin:-20px -16px 16px;height:100px;}
+    .icon-badge{width:42px;height:42px;}
+    .icon-badge svg{width:20px;height:20px;}
+    .quiz-side,.log-side,.quiz-main,.log-main,.calc-side,.calc-result{padding:22px 18px;}
+    .opt{padding:12px 14px;font-size:13.5px;}
+    .code-row{padding:12px;font-size:12.5px;}
+    .pricing-card .pprice{font-size:23px;}
+    .art-head h1{font-size:26px;}
+    .art-meta{gap:10px;font-size:11.5px;}
+    .art-meta span{padding-right:10px;}
+    article{font-size:14.5px;}
+    .product-box{padding:14px;}
+    .thumb-visual .thumb-label,.photo-thumb .thumb-label{font-size:10px;}
+    .ratio-row{flex-wrap:wrap;}
+    .ratio-row input{width:60px;}
+    .log-form{flex-direction:column;align-items:stretch;}
+    .log-form select,.log-form input,.log-form button{width:100%;}
+  }
 </style>
 </head>
+
 <body>
 
 <div class="read-progress" id="readProgress"></div>
