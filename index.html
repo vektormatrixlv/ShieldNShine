@@ -491,7 +491,7 @@
       <a onclick="showView('glossary')">Glossary</a>
       <a onclick="showView('home');scrollToId('guides')">Guides</a>
     </nav>
-    <button class="navcta" id="mainNavCta" onclick="showView('b2b');scrollToId('b2b-contact')">Request trade pricing</button>
+    <button class="navcta" id="mainNavCta" onclick="showView('b2b');scrollToId('b2b-contact')">Trade pricing</button>
   </div>
 </div>
 
@@ -1076,6 +1076,10 @@
           <a>Editorial policy</a>
           <a>Affiliate disclosure</a>
         </div>
+        <div class="fcol">
+          <h4>FOR BUSINESS</h4>
+          <a onclick="showView('b2b')">Trade & wholesale →</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -1342,10 +1346,10 @@
     document.getElementById('b2cNav').style.display = isB2C ? 'flex' : 'none';
     const cta = document.getElementById('mainNavCta');
     if(isB2C){
-      cta.textContent = 'Build my routine';
+      cta.textContent = 'My routine';
       cta.onclick = ()=>{ showView('home'); scrollToId('quiz'); };
     } else {
-      cta.textContent = 'Request trade pricing';
+      cta.textContent = 'Trade pricing';
       cta.onclick = ()=>{ showView('b2b'); scrollToId('b2b-contact'); };
     }
   }
